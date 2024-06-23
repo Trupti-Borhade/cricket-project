@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "features",
         glue = "stepdef",
-        tags = "@smoke",
+        tags = "@sanity",
         plugin = { "pretty",
         "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
 }
