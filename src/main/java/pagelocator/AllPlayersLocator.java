@@ -26,7 +26,7 @@ public class AllPlayersLocator {
 
    public static By btn_deleteplayer = By.xpath("//button[contains(text(), 'Delete')]");
 
-   public static By btn_clickdeleteplayer = By.xpath("//td[a[text()='Melody']]//following::button[contains(text(),'Delete')][1]");
+   public static By btn_clickdeleteplayer = By.xpath("//td[a[text()='Player4']]//following::button[contains(text(),'Delete')][1]");
 
 
 }

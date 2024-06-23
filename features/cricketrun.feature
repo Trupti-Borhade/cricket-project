@@ -73,15 +73,15 @@ Feature: Verify the run of the player in cricket framework
     And I click on Add Run button
     And I verify "errormsg" is "Issue in Data. Duplicate Entry"
     Examples:
-      |Player Name     | Against Country |Player Run|Player Balls|Player Fours  |Player Sixes |Inning Date   |
-      | Player12 - IND |  Australia      | 60       | 35         | 4            | 2           | 20-04-2024   |
+      |Player Name     | Against Country |Player Run |Player Balls |Player Fours  |Player Sixes |Inning Date   |
+      | Player11 - IND |  Australia      | 100       | 60          |5             | 3           | 20-04-2024   |
 
   @smoke @view-run
   Scenario Outline: Verify the run of every player
     And I click on HomePage link
     And I verify current url contains "index.php"
     And I verify All Players Runs header text
-    And I click on "<Player Name>" link
+    And I click on "<Player Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
     And I verify "View Run [<Player Name>]" header text
     And I verify "<Date>" under "Date" label

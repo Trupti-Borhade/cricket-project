@@ -105,5 +105,5 @@ Feature: Verify cricket database framework
       And I verify "<Player Name>" not present under "Player Name"
     Examples:
       |Player Name    |
-      | Melody        |
+      | Player4       |
 
