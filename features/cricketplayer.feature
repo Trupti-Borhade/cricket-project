@@ -1,4 +1,4 @@
-@cricket-player @smoke @regression
+@cricket-player
 Feature: Verify cricket database framework
 
   Background:

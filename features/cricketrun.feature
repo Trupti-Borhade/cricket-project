@@ -1,4 +1,4 @@
-@cricket-run @smoke @regression
+@cricket-run
 
 Feature: Verify the run of the player in cricket framework
 
