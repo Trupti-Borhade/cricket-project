@@ -80,6 +80,7 @@ Feature: Verify the run of the player in cricket framework
   Scenario Outline: Verify the run of every player
     And I click on HomePage link
     And I verify current url contains "index.php"
+    And I refresh application
     And I verify All Players Runs header text
     And I click on "<Player Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
@@ -127,6 +128,7 @@ Feature: Verify the run of the player in cricket framework
   @sanity @delete-viewrunplayer
   Scenario Outline: Verify if "delete" button in view run table is activate
     And I click on HomePage link
+    And I refresh application
     And I verify All Players Runs header text
     And I click on "<Player Name>" under "Player Name"
     And I verify current url contains "view-runs.php"

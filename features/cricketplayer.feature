@@ -70,6 +70,7 @@ Feature: Verify cricket database framework
     And I accept popup
     And I click on All Players link
     And I verify current url contains "all-player.php"
+    And I refresh application
     And I verify View All Players header text
     And I verify "<Player Name>" under "Player Name"
     And I verify "Female" not present under "Player Gender"
@@ -81,6 +82,7 @@ Feature: Verify cricket database framework
     Scenario Outline: Verify if all players data is visible under "All Player"
       And I click on All Players link
       And I verify current url contains "all-player.php"
+      And I refresh application
       And I verify View All Players header text
       And I verify Player ID text
       And I verify "<Player Name>" under "Player Name" label
@@ -96,6 +98,7 @@ Feature: Verify cricket database framework
     Scenario Outline: Verify if "delete" button in View All Players is activate
       And I click on All Players link
       And I verify current url contains "all-player.php"
+      And I refresh application
       And I click on "Delete" button under "<Player Name>"
       And I verify alert is available
       And I verify popup text "Are you sure! you want to delete this player ?"
