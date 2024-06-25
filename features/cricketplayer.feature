@@ -52,7 +52,7 @@ Feature: Verify cricket database framework
     Examples:
       |Player Name  | Player Country |Gender | Player Year |
       | Player1     | India          | Male  | 1989        |
-
+     
 
   @regression @gender
   Scenario Outline: Verify that female gender is not seen on every page

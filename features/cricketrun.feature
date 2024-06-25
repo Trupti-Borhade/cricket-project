@@ -76,7 +76,7 @@ Feature: Verify the run of the player in cricket framework
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours  |Player Sixes |Inning Date   |
       | Player11 - IND |  Australia      | 100       | 60          |5             | 3           | 20-04-2024   |
 
-  @smoke @view-run
+  @sanity @view-run
   Scenario Outline: Verify the run of every player
     And I click on HomePage link
     And I verify current url contains "index.php"
@@ -124,7 +124,7 @@ Feature: Verify the run of the player in cricket framework
       |Player11 - IND  | Australia       | 90        |45           |5              | 6            | 30-04-2024   | Player11  |190      | 2024-04-30 | 90  |5 Four(s)/ 6 Six(s) | 45    |
 
 
-  @smoke @delete-viewrunplayer
+  @sanity @delete-viewrunplayer
   Scenario Outline: Verify if "delete" button in view run table is activate
     And I click on HomePage link
     And I verify All Players Runs header text
