@@ -77,7 +77,7 @@ Feature: Verify cricket database framework
       |Player Name     | Player Country   | Gender |Player Year |
       | Melody         |  Australia       | FeMale |1998        |
 
-    @smoke @all-player
+    @sanity @all-player
     Scenario Outline: Verify if all players data is visible under "All Player"
       And I click on All Players link
       And I verify current url contains "all-player.php"
@@ -92,7 +92,7 @@ Feature: Verify cricket database framework
         |Player Name  | Player Country |Player Gender  | Player Year |
         | Player4     | IND            |Male           | 1997        |
 
-  @smoke @delete-viewallplayer
+  @sanity @delete-viewallplayer
     Scenario Outline: Verify if "delete" button in View All Players is activate
       And I click on All Players link
       And I verify current url contains "all-player.php"
