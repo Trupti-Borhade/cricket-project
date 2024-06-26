@@ -223,7 +223,6 @@ public class AddNewPlayerModule {
             logger.info("Alert is available.");
             return true;
         } catch(Exception e) {
-            logger.warn("Alert is not available.");
             return false;
         }
     }
