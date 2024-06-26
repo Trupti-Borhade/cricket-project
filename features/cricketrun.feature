@@ -125,7 +125,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Balls>" under "Balls" label
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours   | Player Sixes |Inning Date   |Name       |Total Run| Date       | Run | Four/Sixes         | Balls |
-      |Player21 - IND  | Australia       | 80        |45           |5              | 4            | 27-06-2024   | Player21  |180      | 2024-06-27 | 80  |5 Four(s)/ 4 Six(s) | 45    |
+      |Player21 - IND  | Australia       | 80        |45           |5              | 4            | 27-06-2024   | Player21  |170      | 2024-06-27 | 80  |5 Four(s)/ 4 Six(s) | 45    |
 
 
   @sanity @delete-viewrunplayer
