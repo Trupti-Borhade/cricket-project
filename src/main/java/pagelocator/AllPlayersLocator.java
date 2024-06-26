@@ -20,7 +20,7 @@ public class AllPlayersLocator {
 
    public static By lbl_action = By.xpath("//td[contains(text(),'Actions')]");
 
-   public static By txt_playername = By.xpath("//*[text()='Player11']");
+   public static By txt_playername = By.xpath("//*[text()='Player21']");
 
    public static By txt_femalegender = By.xpath("//*[text()='FeMale']");
 

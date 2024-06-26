@@ -24,7 +24,7 @@ public class AddPlayerLocator {
 
     public static By select_playername = By.xpath("//*[contains(text(),'Player Name')]/..//select");
 
-    public static By select_playername_option = By.xpath("//option[text()='Player11 - IND']");
+    public static By select_playername_option = By.xpath("//option[text()='Player21 - IND']");
 
     public static By select_country = By.xpath("//*[contains(text(),'Player Country')]/..//select");
 

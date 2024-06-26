@@ -196,11 +196,12 @@ public class AddNewPlayerModule {
             WebElement element = driver.findElement(AddPlayerLocator.alerttxt_id);
             String actualText = element.getText();
             logger.info("Actual text for '{}': '{}'", elementText, actualText);
-            Assert.assertEquals(actualText, expectedText, "Element text verification failed");
+            Assert.assertEquals(actualText, expectedText);
             logger.info("'{}' is '{}'. Verification passed.", elementText, expectedText);
         }
         catch(Exception e){
             logger.error("Error occurred while verifying text for element '{}': {}", elementText, e.getMessage());
+            Assert.assertEquals("Error occurred while verifying text for element '" + elementText + "'", expectedText, e.getMessage());
         }
     }
 

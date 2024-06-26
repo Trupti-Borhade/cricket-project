@@ -23,7 +23,7 @@ public class AddRunLocator {
 
     public static By select_playername = By.xpath("//*[contains(text(),'Player Name')]/..//select");
 
-    public static By select_playername_option = By.xpath("//option[text()='Player11 - IND']");
+    public static By select_playername_option = By.xpath("//option[text()='Player21 - IND']");
 
     public static By dropdown_playername = By.xpath("//select[@id='playername']");
 

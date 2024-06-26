@@ -17,11 +17,12 @@ Feature: Verify the run of the player in cricket framework
     And I verify popup text "<Player Name>  Added  Successfully"
     And I accept popup
     Examples:
-      |Player Name   | Player Country | Gender |Player Year  |
-      | Player11     | India          | Male   |1992         |
-      | Player12     | India          | Male   |1987         |
-      | Player13     | India          | Male   |1995         |
-      | Player14     | India          | Male   |1998         |
+      |Player Name   | Player Country | Gender |Player Year   |
+      | Player21     | India          | Male   |1991          |
+      | Player22     | India          | Male   |1989          |
+      | Player23     | India          | Male   |1994          |
+      | Player24     | India          | Male   |1995          |
+
 
   @smoke @add-runlabel
   Scenario Outline: Verify if user is able to access "Add Run" page
@@ -39,7 +40,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify Add Run button
     Examples:
       |Player Name     |
-      |Player11 - IND  |
+      |Player21 - IND  |
 
   @sanity @add-score
   Scenario Outline: Verify if user is able to enter data in "Add Run" page
@@ -52,13 +53,15 @@ Feature: Verify the run of the player in cricket framework
     And I enter "<Player Sixes>" using "playersixes"
     And I enter "<Inning Date>" using "playerYear"
     And I click on Add Run button
+    And I verify alert is available
     And I verify "errormsg" is "Runs Added Successfully"
     Examples:
-    |Player Name     | Against Country |Player Run|Player Balls|Player Fours  |Player Sixes |Inning Date   |
-    | Player11 - IND |  Australia      |100       |60          |5             | 3           | 20-04-2024   |
-    | Player12 - IND |  Australia      | 60       | 35         | 4            | 2           | 20-04-2024   |
-    | Player13 - IND |  Australia      | 20       | 10         | 2            | 1           | 20-04-2024   |
-    | Player14 - IND |  Australia      | 15       | 7          | 1            | 1           | 20-04-2024   |
+    |Player Name      | Against Country  |Player Run|Player Balls|Player Fours  |Player Sixes |Inning Date   |
+    | Player21 - IND  |  Australia       |90        |45          |5             | 4           | 26-06-2024   |
+    | Player22 - IND  |  Australia       | 60       | 32         | 4            | 1           | 26-06-2024   |
+    | Player23 - IND  |  Australia       | 20       | 10         | 2            | 1           | 26-06-2024   |
+    | Player24 - IND  |  Australia       | 14       | 7          | 1            | 1           | 26-06-2024   |
+
 
   @regression @duplicate-entry
   Scenario Outline: Verify if user is able to enter data for the same player again in "Add Run" page
@@ -74,12 +77,13 @@ Feature: Verify the run of the player in cricket framework
     And I verify "errormsg" is "Issue in Data. Duplicate Entry"
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours  |Player Sixes |Inning Date   |
-      | Player11 - IND |  Australia      | 100       | 60          |5             | 3           | 20-04-2024   |
+      | Player21 - IND |  Australia      | 90        | 45          |5             | 4          | 26-06-2024   |
 
   @sanity @view-run
   Scenario Outline: Verify the run of every player
     And I click on HomePage link
     And I verify All Players Runs header text
+    And I refresh application
     And I verify "<Player Name>" under "Player Name"
     And I click on "<Player Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
@@ -91,7 +95,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Balls>" under "Balls" label
     Examples:
       | Player Name     | Date       | Against Country | Run  | Four/Sixes          | Balls |
-      | Player11        | 2024-04-20 | AUS             | 100  | 5 Four(s)/ 3 Six(s) | 60    |
+      | Player21        | 2024-06-26 | AUS             | 90   | 5 Four(s)/ 4 Six(s) | 45    |
 
 
   @regression @current-statistics
@@ -121,7 +125,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Balls>" under "Balls" label
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours   | Player Sixes |Inning Date   |Name       |Total Run| Date       | Run | Four/Sixes         | Balls |
-      |Player11 - IND  | Australia       | 90        |45           |5              | 6            | 30-04-2024   | Player11  |190      | 2024-04-30 | 90  |5 Four(s)/ 6 Six(s) | 45    |
+      |Player21 - IND  | Australia       | 80        |45           |5              | 4            | 27-06-2024   | Player21  |180      | 2024-06-27 | 80  |5 Four(s)/ 4 Six(s) | 45    |
 
 
   @sanity @delete-viewrunplayer
@@ -138,6 +142,6 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Run>" not present under "View Run [<Player Name>]"
     Examples:
     | Player Name | Run   |
-    | Player11    | 100   |
+    | Player21    | 90    |
 
 
