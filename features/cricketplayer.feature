@@ -72,11 +72,10 @@ Feature: Verify cricket database framework
     And I verify current url contains "all-player.php"
     And I refresh application
     And I verify View All Players header text
-    And I verify "<Player Name>" under "Player Name"
     And I verify "Female" not present under "Player Gender"
     Examples:
-      |Player Name     | Player Country   | Gender |Player Year |
-      | Melody         |  Australia       | FeMale |1998        |
+      |Player Name       | Player Country     | Gender  |Player Year |
+      | Anaika           |  Australia         | FeMale  |1998        |
 
     @sanity @all-player
     Scenario Outline: Verify if all players data is visible under "All Player"

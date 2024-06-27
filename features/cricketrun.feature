@@ -74,6 +74,7 @@ Feature: Verify the run of the player in cricket framework
     And I enter "<Player Sixes>" using "playersixes"
     And I enter "<Inning Date>" using "playerYear"
     And I click on Add Run button
+    And I verify alert is available
     And I verify "errormsg" is "Issue in Data. Duplicate Entry"
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours  |Player Sixes |Inning Date   |
@@ -109,6 +110,7 @@ Feature: Verify the run of the player in cricket framework
     And I enter "<Player Sixes>" using "playersixes"
     And I enter "<Inning Date>" using "playerYear"
     And I click on Add Run button
+    And I verify alert is available
     And I verify "errormsg" is "Runs Added Successfully"
     And I refresh application
     And I click on HomePage link
@@ -118,6 +120,7 @@ Feature: Verify the run of the player in cricket framework
     And I click on "<Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
     And I verify "View Run [<Name>]" header text
+    And I refresh application
     And I verify "<Date>" under "Date" label
     And I verify "AUS" under "Against Country" label
     And I verify "<Run>" under "Run" label
