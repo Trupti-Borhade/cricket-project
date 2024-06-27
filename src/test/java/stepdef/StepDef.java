@@ -8,10 +8,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.PropertiesReader;
+
+import java.util.Properties;
 
 public class StepDef {
     private static final Logger logger = LoggerFactory.getLogger(StepDef.class.getName());
@@ -26,7 +29,8 @@ public class StepDef {
 
     @Given("I open application")
     public void i_open_application() {
-        String browser = System.getProperty("browser", "firefox");
+        String browser = PropertiesReader.getUrl().getProperty("browser");
+        System.out.println("Running on "+browser+" Browser");
         if (browser.equalsIgnoreCase("chrome")) {
             String path = System.getProperty("user.dir") + "/driver/chromedriver.exe";
             System.setProperty("webdriver.chrome.driver", path);
@@ -35,7 +39,12 @@ public class StepDef {
             String path = System.getProperty("user.dir") + "/driver/geckodriver.exe";
             System.setProperty("webdriver.gecko.driver", path);
             driver = new FirefoxDriver();
-        } else {
+        } else if (browser.equalsIgnoreCase("edge")) {
+            String path = System.getProperty("user.dir") + "/driver/msedgedriver.exe";
+            System.setProperty("webdriver.msedge.driver", path);
+            driver = new EdgeDriver();
+        }
+        else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
 
