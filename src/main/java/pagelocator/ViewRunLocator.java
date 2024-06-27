@@ -2,8 +2,12 @@ package pagelocator;
 
 import org.openqa.selenium.By;
 
+
 public class ViewRunLocator {
+
+
    public static By link_homepage=By.xpath("//a[text()='HomePage']");
+
 
    public static By lbl_player = By.xpath("//td[a[text()='Player21']]");
 
