@@ -272,20 +272,12 @@ public class AddNewPlayerModule {
     }
 
 
-    public void selectDropdownByPlayerName(String playeroption, String playername) {
-        try {
-            WebElement dropdown = driver.findElement(AddPlayerLocator.select_playername);
-            dropdown.click();
-            WebElement optionElement = dropdown.findElement(AddPlayerLocator.select_playername_option);
-            optionElement.click();
-            logger.info("Selected dropdown option '{}' under '{}'", playeroption, playername);
-            Assert.assertTrue("Dropdown option '" + playeroption + "' under '" + playername + "' is not selected",
-                    optionElement.isSelected());
-        }
-        catch (Exception e) {
-            logger.error("Error occurred while selecting dropdown option '{}' under '{}': {}", playeroption, playername, e.getMessage());
-            Assert.fail("Error occurred while selecting dropdown option '" + playeroption + "' under '" + playername + "': " + e.getMessage());
-        }
+    public void selectDropdownByPlayerName(String playeroption, String playername){
+        WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
+        dropdown.sendKeys(playeroption);
+        logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
+        Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
+
     }
 }
 
