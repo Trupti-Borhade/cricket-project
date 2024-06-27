@@ -4,17 +4,22 @@ import org.junit.Assert;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pagelocator.ViewRunLocator;
 
+
+
 public class ViewRunModule {
     private static final Logger logger = LoggerFactory.getLogger(ViewRunModule.class.getName());
 
-    WebDriver driver;
+   public WebDriver driver;
+
     public ViewRunModule(WebDriver driver) {
         this.driver = driver;
     }
+
 
     public void clickHomePageLink() {
         try{
@@ -97,9 +102,9 @@ public class ViewRunModule {
     public void clickPlayerName(String sectionElement, String webElement) {
         WebElement section = driver.findElement(ViewRunLocator.lbl_playername);
         WebElement element = section.findElement(ViewRunLocator.lbl_player);
+        Assert.assertTrue("Player name should be clickable after click", element.isEnabled());
         element.click();
         logger.info("Clicked on '{}' under '{}'", sectionElement, webElement);
-        Assert.assertTrue("Player name should be clickable after click", element.isEnabled());
 
     }
 
