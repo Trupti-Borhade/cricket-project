@@ -272,11 +272,16 @@ public class AddNewPlayerModule {
     }
 
 
-    public void selectDropdownByPlayerName(String playeroption, String playername){
+    public void selectDropdownByPlayerName(String playeroption, String playername) throws InterruptedException {
         WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
-        dropdown.sendKeys(playeroption);
-        logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
-        Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
+        if(dropdown.isDisplayed()){
+            dropdown.click();
+            //Thread.sleep(10000);
+            //dropdown.sendKeys(playeroption);
+            logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
+            Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
+        }
+
 
     }
 }

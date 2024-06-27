@@ -193,8 +193,13 @@ public class AddRunModule {
                 throw new IllegalArgumentException("Invalid locator: " + locator);
         }
         if(inputField.isEnabled() || inputField.isDisplayed()){
-            inputField.click();
-            inputField.sendKeys(value);
+            if(locator.equalsIgnoreCase("playerYear")) {
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                js.executeScript("document.getElementById('playerYear').setAttribute('value','"+value+"');");
+            }else {
+                inputField.click();
+                inputField.sendKeys(value);
+            }
             logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
         }
 

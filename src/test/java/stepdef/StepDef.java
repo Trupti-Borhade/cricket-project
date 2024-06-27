@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.PropertiesReader;
 
-import java.util.Properties;
+
 
 public class StepDef {
     private static final Logger logger = LoggerFactory.getLogger(StepDef.class.getName());
@@ -58,6 +58,7 @@ public class StepDef {
         viewRunModule = new ViewRunModule(driver);
         driver.get(PropertiesReader.getUrl().getProperty("url"));
     }
+
 
     @And("I click on Add New Player link")
     public void iClickOnAddNewPlayerLink() {
@@ -317,8 +318,8 @@ public class StepDef {
     }
 
     @And("I select dropdown option {string} under {string} label")
-    public void iSelectDropdownOptionUnderLabel(String playeroption, String playername) {
-        logger.info("Selecting dropdown option '{}' under country '{}'", playeroption, playername);
+    public void iSelectDropdownOptionUnderLabel(String playeroption, String playername) throws InterruptedException {
+        logger.info("Selecting dropdown option '{}' under label '{}'", playeroption, playername);
         addNewPlayerModule.selectDropdownByPlayerName(playeroption, playername);
     }
 
