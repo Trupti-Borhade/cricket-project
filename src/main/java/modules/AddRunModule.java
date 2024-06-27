@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pagelocator.AddRunLocator;
 
+
 import java.time.Duration;
+
 import java.util.List;
 
 public class AddRunModule {
@@ -190,12 +192,13 @@ public class AddRunModule {
             default:
                 throw new IllegalArgumentException("Invalid locator: " + locator);
         }
-        inputField.clear();
-        inputField.sendKeys(value);
-        logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
+        if(inputField.isEnabled() || inputField.isDisplayed()){
+            inputField.click();
+            inputField.sendKeys(value);
+            logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
+        }
+
     }
-
-
 
     public void clickAddRunButton(){
         try {
@@ -221,7 +224,6 @@ public class AddRunModule {
             return false;
         }
     }
-
 
 
     public void verifyDropdownOptionUnderPlayerName(String optionText, String dropdownIdentifier) {

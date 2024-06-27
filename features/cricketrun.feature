@@ -57,10 +57,10 @@ Feature: Verify the run of the player in cricket framework
     And I verify "errormsg" is "Runs Added Successfully"
     Examples:
     |Player Name      | Against Country  |Player Run|Player Balls|Player Fours  |Player Sixes |Inning Date   |
-    | Player21 - IND  |  Australia       |90        |45          |5             | 4           | 26-06-2024   |
-    | Player22 - IND  |  Australia       | 60       | 32         | 4            | 1           | 26-06-2024   |
-    | Player23 - IND  |  Australia       | 20       | 10         | 2            | 1           | 26-06-2024   |
-    | Player24 - IND  |  Australia       | 14       | 7          | 1            | 1           | 26-06-2024   |
+    | Player21 - IND  |  Australia       |90        |45          |5             | 4           | 2024-06-26   |
+    | Player22 - IND  |  Australia       | 60       | 32         | 4            | 1           | 2024-06-26   |
+    | Player23 - IND  |  Australia       | 20       | 10         | 2            | 1           | 2024-06-26   |
+    | Player24 - IND  |  Australia       | 14       | 7          | 1            | 1           | 2024-06-26   |
 
 
   @regression @duplicate-entry
@@ -77,7 +77,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify "errormsg" is "Issue in Data. Duplicate Entry"
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours  |Player Sixes |Inning Date   |
-      | Player21 - IND |  Australia      | 90        | 45          |5             | 4          | 26-06-2024   |
+      | Player21 - IND |  Australia      | 90        | 45          |5             | 4          | 2024-06-26   |
 
   @sanity @view-run
   Scenario Outline: Verify the run of every player
@@ -125,7 +125,7 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Balls>" under "Balls" label
     Examples:
       |Player Name     | Against Country |Player Run |Player Balls |Player Fours   | Player Sixes |Inning Date   |Name       |Total Run| Date       | Run | Four/Sixes         | Balls |
-      |Player21 - IND  | Australia       | 80        |45           |5              | 4            | 27-06-2024   | Player21  |170      | 2024-06-27 | 80  |5 Four(s)/ 4 Six(s) | 45    |
+      |Player21 - IND  | Australia       | 80        |45           |5              | 4            | 2024-06-27   | Player21  |170      | 2024-06-27 | 80  |5 Four(s)/ 4 Six(s) | 45    |
 
 
   @sanity @delete-viewrunplayer

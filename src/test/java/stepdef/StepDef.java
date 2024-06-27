@@ -42,8 +42,8 @@ public class StepDef {
         driver.manage().window().maximize();
         logger.info("Window maximized.");
 
-         addNewPlayerModule = new AddNewPlayerModule(driver);
-        addRunModule  = new AddRunModule(driver);
+        addNewPlayerModule = new AddNewPlayerModule(driver);
+        addRunModule = new AddRunModule(driver);
         allPlayersModule = new AllPlayersModule(driver);
         homePageModule = new HomePageModule(driver);
         viewRunModule = new ViewRunModule(driver);
@@ -92,7 +92,7 @@ public class StepDef {
     }
 
     @And("I verify dropdown under {string}")
-    public void iVerifyDropdownUnderPlayerCountry(String parentElement){
+    public void iVerifyDropdownUnderPlayerCountry(String parentElement) {
         logger.info("Verifying dropdown under: " + parentElement);
         addNewPlayerModule.verifyDropdownUnderPlayerCountry(parentElement);
     }
@@ -178,8 +178,8 @@ public class StepDef {
     }
 
     @And("I verify {string} is {string}")
-    public void iVerifyIs(String elementText, String expectedText){
-        addNewPlayerModule.verifyElementText(elementText,expectedText);
+    public void iVerifyIs(String elementText, String expectedText) {
+        addNewPlayerModule.verifyElementText(elementText, expectedText);
     }
 
     @And("I click on All Players link")
@@ -219,9 +219,9 @@ public class StepDef {
 
 
     @And("I click on {string} button under {string}")
-    public void iClickOnButtonUnderPlayerName(String buttonName,String playerName) {
+    public void iClickOnButtonUnderPlayerName(String buttonName, String playerName) {
         logger.info("Clicking on Delete button under player name....");
-        allPlayersModule.clickDeletePlayerButton(buttonName,playerName);
+        allPlayersModule.clickDeletePlayerButton(buttonName, playerName);
     }
 
     @And("I click on Add Run link")
@@ -269,7 +269,7 @@ public class StepDef {
 
     @And("I verify dropdown option {string} under {string}")
     public void iVerifyDropdownOptionUnderPlayerName(String optionText, String dropdownIdentifier) {
-      addRunModule.verifyDropdownOptionUnderPlayerName(optionText,dropdownIdentifier);
+        addRunModule.verifyDropdownOptionUnderPlayerName(optionText, dropdownIdentifier);
     }
 
     @And("I verify Against Country label")
@@ -314,7 +314,6 @@ public class StepDef {
     }
 
 
-
     @And("I click on HomePage link")
     public void iClickOnHomePageLink() {
         logger.info("Clicking on HomePage link...");
@@ -355,8 +354,8 @@ public class StepDef {
     }
 
     @And("I click on {string} button under {string} header")
-    public void iClickOnButtonUnderHeader(String buttonName,String headerRun) {
-        viewRunModule.clickDeletePlayersRunButton(buttonName,headerRun);
+    public void iClickOnButtonUnderHeader(String buttonName, String headerRun) {
+        viewRunModule.clickDeletePlayersRunButton(buttonName, headerRun);
         logger.info("Clicked on '{}' button under '{}'", buttonName, headerRun);
 
     }
