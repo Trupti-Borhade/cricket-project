@@ -1,5 +1,6 @@
 package stepdef;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import modules.*;
@@ -26,11 +27,25 @@ public class StepDef {
     public HomePageModule homePageModule;
     public ViewRunModule viewRunModule;
 
+    @After
+    public void teardown(){
+        try{
+            driver.close();
+            driver.quit();
+            logger.info("WebDriver closed successfully.");
+        }catch(Exception e){
+            logger.error(e.getMessage());
+        }
+        driver = null;
+    }
 
     @Given("I open application")
     public void i_open_application() {
-        String browser = PropertiesReader.getUrl().getProperty("browser");
-        System.out.println("Running on "+browser+" Browser");
+        String browser = PropertiesReader.getEnvProperties().getProperty("browser");
+        if(System.getProperty("browser") != null){
+            browser = System.getProperty("browser");
+        }
+        logger.info("Running on "+browser+" Browser");
         if (browser.equalsIgnoreCase("chrome")) {
             String path = System.getProperty("user.dir") + "/driver/chromedriver.exe";
             System.setProperty("webdriver.chrome.driver", path);
@@ -56,7 +71,7 @@ public class StepDef {
         allPlayersModule = new AllPlayersModule(driver);
         homePageModule = new HomePageModule(driver);
         viewRunModule = new ViewRunModule(driver);
-        driver.get(PropertiesReader.getUrl().getProperty("url"));
+        driver.get(PropertiesReader.getEnvProperties().getProperty("url"));
     }
 
 

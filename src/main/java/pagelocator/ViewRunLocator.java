@@ -8,7 +8,6 @@ public class ViewRunLocator {
 
    public static By link_homepage=By.xpath("//a[text()='HomePage']");
 
-
    public static By lbl_player = By.xpath("//td[a[text()='Player21']]");
 
    public static By lbl_viewrun = By.xpath("//*[contains(text(),' View Run [Player21]')]");

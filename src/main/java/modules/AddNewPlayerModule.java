@@ -276,8 +276,6 @@ public class AddNewPlayerModule {
         WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
         if(dropdown.isDisplayed()){
             dropdown.click();
-            //Thread.sleep(10000);
-            //dropdown.sendKeys(playeroption);
             logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
             Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
         }

@@ -21,19 +21,6 @@ public class ViewRunModule {
     }
 
 
-    public void clickHomePageLink() {
-        try{
-            WebElement linkElement = driver.findElement(ViewRunLocator.link_homepage);
-            linkElement.click();
-            Assert.assertTrue("Successfully clicked on link", true);
-            logger.info("HomePage link clicked successfully.");
-        }
-        catch(Exception e){
-            Assert.fail("Error occurred while clicking HomePage link: " + e.getMessage());
-            logger.warn("Error occurred while clicking HomePage link: " + e.getMessage());
-        }
-    }
-
     public boolean verifyViewRunHeader() {
         try {
             WebElement headerElement = driver.findElement(ViewRunLocator.lbl_viewrun);
@@ -64,31 +51,6 @@ public class ViewRunModule {
         } catch(NoSuchElementException e) {
             Assert.fail("Total Run label is not present");
             logger.warn("Total Run label is not present");
-        }
-    }
-
-    public boolean verifyRunDeleteButton() {
-        try {
-            WebElement buttonElement = driver.findElement(ViewRunLocator.btn_deleterun);
-            Assert.assertTrue("Delete button is present under action", buttonElement.isDisplayed());
-            logger.info("Delete button is present under action");
-            return true;
-        } catch(NoSuchElementException e) {
-            Assert.fail("Delete button is not present under action");
-            logger.warn("Delete button is not present under action");
-            return false;
-        }
-        }
-
-
-    public void clickDeleteRunButton(){
-        try {
-            WebElement buttonElement = driver.findElement(ViewRunLocator.btn_deleterun);
-            Assert.assertTrue("Delete button is present under action", buttonElement.isDisplayed());
-            buttonElement.click();
-            logger.info("Clicked on the 'Delete' button.");
-        } catch(NoSuchElementException e) {
-            logger.warn("Delete button not found on the page.");
         }
     }
 

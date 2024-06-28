@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
     public class PropertiesReader {
-        public static Properties getUrl() {
+        public static Properties getEnvProperties() {
             try {
                 Properties property=new Properties();
                 property.load(new FileInputStream(new File(System.getProperty("user.dir")+"/config/qa.properties")));

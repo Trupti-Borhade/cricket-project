@@ -2,15 +2,12 @@ package modules;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pagelocator.AddRunLocator;
 
 
-import java.time.Duration;
 
 import java.util.List;
 
@@ -141,19 +138,6 @@ public class AddRunModule {
         }
     }
 
-    public void selectDropdownByPlayerName(String playername, String optionText) {
-        try {
-            WebElement dropdown = driver.findElement(AddRunLocator.select_playername);
-            dropdown.click();
-            logger.info("Clicked on the dropdown.");
-
-            WebElement option = dropdown.findElement(AddRunLocator.select_playername_option);
-            option.click();
-            logger.info("Selected option '" + optionText + "' from the dropdown for player name : " + playername);
-        } catch(NoSuchElementException e) {
-            logger.warn("Element not found: " + e.getMessage());
-        }
-    }
 
     public void selectDropdownByCountry(String option, String country){
         try {
@@ -213,20 +197,6 @@ public class AddRunModule {
             logger.info("Clicked on the 'Add Run' button.");
         } catch (NoSuchElementException e) {
             logger.warn("Add Run Button not found on the page.");
-        }
-    }
-
-    public boolean verifyAlertText(String expectedAlertText) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        try {
-            wait.until(ExpectedConditions.alertIsPresent());
-            Alert alert = driver.switchTo().alert();
-            String actualAlertText = alert.getText();
-            logger.info("Popup text verification successful: Expected text - '{}', Actual text - '{}'", expectedAlertText, actualAlertText);
-            return actualAlertText.equals(expectedAlertText);
-        } catch (Exception e) {
-            logger.error("Popup text verification failed: {}", e.getMessage());
-            return false;
         }
     }
 
