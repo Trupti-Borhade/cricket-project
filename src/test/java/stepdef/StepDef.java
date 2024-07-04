@@ -3,6 +3,7 @@ package stepdef;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import modules.*;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.PropertiesReader;
 
+import java.io.IOException;
 
 
 public class StepDef {
@@ -47,16 +49,13 @@ public class StepDef {
         }
         logger.info("Running on "+browser+" Browser");
         if (browser.equalsIgnoreCase("chrome")) {
-            String path = System.getProperty("user.dir") + "/driver/chromedriver.exe";
-            System.setProperty("webdriver.chrome.driver", path);
+            WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
-            String path = System.getProperty("user.dir") + "/driver/geckodriver.exe";
-            System.setProperty("webdriver.gecko.driver", path);
+            WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
-            String path = System.getProperty("user.dir") + "/driver/msedgedriver.exe";
-            System.setProperty("webdriver.msedge.driver", path);
+            WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
         }
         else {
@@ -203,7 +202,7 @@ public class StepDef {
     }
 
     @And("I verify {string} is {string}")
-    public void iVerifyIs(String elementText, String expectedText) {
+    public void iVerifyIs(String elementText, String expectedText) throws IOException {
         addNewPlayerModule.verifyElementText(elementText, expectedText);
     }
 
@@ -244,7 +243,7 @@ public class StepDef {
 
 
     @And("I click on {string} button under {string}")
-    public void iClickOnButtonUnderPlayerName(String buttonName, String playerName) {
+    public void iClickOnButtonUnderPlayerName(String buttonName, String playerName) throws IOException {
         logger.info("Clicking on Delete button under player name....");
         allPlayersModule.clickDeletePlayerButton(buttonName, playerName);
     }
@@ -379,7 +378,7 @@ public class StepDef {
     }
 
     @And("I click on {string} button under {string} header")
-    public void iClickOnButtonUnderHeader(String buttonName, String headerRun) {
+    public void iClickOnButtonUnderHeader(String buttonName, String headerRun) throws IOException {
         viewRunModule.clickDeletePlayersRunButton(buttonName, headerRun);
         logger.info("Clicked on '{}' button under '{}'", buttonName, headerRun);
 

@@ -8,7 +8,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pagelocator.AddPlayerLocator;
+import utils.WebAction;
+import utils.WebVerification;
 
+import java.io.IOException;
 import java.time.Duration;
 
 
@@ -17,101 +20,82 @@ public class AddNewPlayerModule {
     private static final Logger logger = LoggerFactory.getLogger(AddNewPlayerModule.class.getName());
 
     public WebDriver driver;
+    public WebAction wAction;
+    public WebVerification wVerification;
+
     public AddNewPlayerModule(WebDriver driver) {
         this.driver = driver;
+        wAction = new WebAction(this.driver);
+        wVerification = new WebVerification();
     }
 
     public void clickAddPlayerLink() {
         try {
-            WebElement linkElement = driver.findElement(AddPlayerLocator.link_addplayer);
-            linkElement.click();
-            Assert.assertTrue("Successfully clicked on link", true);
-            logger.info("Add Player link clicked successfully.");
-        } catch(Exception e) {
-            Assert.fail("Error occurred while clicking Add Player link: " + e.getMessage());
-            logger.warn("Error occurred while clicking Add Player link: " + e.getMessage());
+            boolean isClickHappen = wAction.click(AddPlayerLocator.link_addplayer);
+            wVerification.assertTrue("Successfully clicked on Add Player Link", isClickHappen);
+        } catch (Exception e) {
+            wVerification.assertFail("Error occurred while clicking Add Player link: " + e.getMessage());
         }
     }
 
     public boolean verifyAddPlayerHeader() {
-        boolean isBooleanPresent = false;
         try {
-            WebElement headerElement = driver.findElement(AddPlayerLocator.lbl_addNewPlayer);
-            Assert.assertTrue("Add Player header is present", headerElement.isDisplayed());
-            logger.info("Add Player header element found.");
-            isBooleanPresent = true;
-        } catch(NoSuchElementException e) {
-            Assert.fail("Add Player header is not present");
-            logger.warn("Add Player header element is not found.");
+            wVerification.assertTrue("Add Player header is present", wAction.isElementDisplayed(AddPlayerLocator.lbl_addNewPlayer));
+            return true;
+        } catch (NoSuchElementException e) {
+            wVerification.assertFail("Add Player header is not present");
+            return false;
         }
-        return isBooleanPresent;
-
     }
 
-    public void verifyAddPlayerLabels() {
+    public boolean verifyAddPlayerLabels() {
+        boolean isBooleanPresent = false;
         try {
-            WebElement elm = driver.findElement(AddPlayerLocator.lbl_playername);
-            Assert.assertTrue("Player Name label is present", elm.isDisplayed());
-            logger.info("Player Name label is present");
-        } catch(NoSuchElementException e) {
-            Assert.fail("Player Name label is not present");
-            logger.warn("Player Name label is not present");
-        }
+            wVerification.assertTrue("Player Name label is present", wAction.isElementDisplayed(AddPlayerLocator.lbl_playername));
+            isBooleanPresent = true;
+        } catch (NoSuchElementException e) {
+            wVerification.assertFail("Player Name label is not present");
 
-        try {
-            WebElement elm = driver.findElement(AddPlayerLocator.lbl_playercountry);
-            Assert.assertTrue("Player Country label is present", elm.isDisplayed());
-            logger.info("Player Country label is present");
-        } catch(NoSuchElementException e) {
-            Assert.fail("Player Country label is not present");
-            logger.warn("Player Country label is not present");
         }
-
         try {
-            WebElement elm = driver.findElement(AddPlayerLocator.lbl_playergender);
-            Assert.assertTrue("Player Gender label is present", elm.isDisplayed());
-            logger.info("Player Gender label is present");
+            wVerification.assertTrue("Player Country label is present", wAction.isElementDisplayed(AddPlayerLocator.lbl_playercountry));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Player Gender label is not present");
-            logger.warn("Player Gender label is not present");
+            wVerification.assertFail("Player Country label is not present");
         }
-
         try {
-            WebElement elm = driver.findElement(AddPlayerLocator.lbl_playeryear);
-            Assert.assertTrue("Player Year label is present", elm.isDisplayed());
-            logger.info("Player Year label is present");
+            wVerification.assertTrue("Player Gender label is present", wAction.isElementDisplayed(AddPlayerLocator.lbl_playergender));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Player Year label is not present");
-            logger.warn("Player Year label is not present");
+            wVerification.assertFail("Player Gender label is not present");
         }
+        try {
+            wVerification.assertTrue("Player Year label is present",  wAction.isElementDisplayed(AddPlayerLocator.lbl_playeryear));
+            isBooleanPresent = true;
+        } catch(NoSuchElementException e) {
+            wVerification.assertFail("Player Year label is not present");
+        }
+        return isBooleanPresent;
     }
 
     public boolean verifyAddPlayerButton() {
-        boolean isBooleanPresent = false;
         try {
-            WebElement buttonElement = driver.findElement(AddPlayerLocator.btn_addplayer);
-            Assert.assertTrue("Add Player button is present", buttonElement.isDisplayed());
-            logger.info("Add Player button is present");
-            isBooleanPresent = true;
-        } catch(NoSuchElementException e) {
-            Assert.fail("Add Player button is not present");
-            logger.warn("Add Player button is not present");
+            wVerification.assertTrue("Add Player button is present", wAction.isElementDisplayed(AddPlayerLocator.btn_addplayer));
+             return true;
+        } catch (NoSuchElementException e) {
+            wVerification.assertFail("Add Player button is not present");
+            return false;
         }
-        return isBooleanPresent;
-
     }
 
     public void verifyDropdownUnderPlayerCountry(String parentElement) {
         try {
-            WebElement parent = driver.findElement(AddPlayerLocator.select_country);
+            WebElement parent = wAction.getElement(AddPlayerLocator.select_country);
             logger.info("Parent element found: " + parentElement);
-
             WebElement dropdown = new Select(parent).getFirstSelectedOption();
-            logger.info("Dropdown is displayed: " + dropdown.isDisplayed());
-            Assert.assertTrue("Dropdown is not found under the specified element: " + parentElement, dropdown.isDisplayed());
+            wVerification.assertTrue("Dropdown is not found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
         } catch (Exception e) {
-            logger.warn("Error occurred while verifying dropdown: " + e.getMessage());
-            Assert.fail("Error occurred while verifying dropdown: " + e.getMessage());
+            wVerification.assertFail("Error occurred while verifying dropdown: " + e.getMessage());
         }
     }
 
@@ -119,16 +103,17 @@ public class AddNewPlayerModule {
         WebElement inputField;
         switch(locator) {
             case "playername":
-                inputField = driver.findElement(AddPlayerLocator.txtbox_playername);
+                inputField = wAction.getElement(AddPlayerLocator.txtbox_playername);
                 break;
             case "playerYear":
-                inputField = driver.findElement(AddPlayerLocator.txtbox_playeryear);
+                inputField = wAction.getElement(AddPlayerLocator.txtbox_playeryear);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid locator: " + locator);
         }
-        inputField.clear();
-        inputField.sendKeys(value);
+        //inputField.clear();
+        //inputField.sendKeys(value);
+        wAction.enterData(inputField,value);
         logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
     }
 
@@ -138,81 +123,66 @@ public class AddNewPlayerModule {
         WebElement textbox;
 
         if (label.equals("Player Name")) {
-            parent = driver.findElement(AddPlayerLocator.lbl_playername);
+            parent = wAction.getElement(AddPlayerLocator.lbl_playername);
             logger.info("Parent element text: " + parent.getText());
-
             textbox = parent.findElement(AddPlayerLocator.txtbox_playername);
         }
         else if (label.equals("Player Year")) {
-            parent = driver.findElement(AddPlayerLocator.lbl_playeryear);
+            parent = wAction.getElement(AddPlayerLocator.lbl_playeryear);
             logger.info("Parent element text: " + parent.getText());
-
             textbox = parent.findElement(AddPlayerLocator.txtbox_playeryear);
         }
         else {
             logger.error("Invalid label provided: " + label);
             return;
         }
-
-        logger.info("Textbox is displayed: " + textbox.isDisplayed());
-        Assert.assertTrue("Textbox is not found under the specified element: " + label, textbox.isDisplayed());
-    }
-
-
-    public void selectDropdownByCountry(String option, String country){
-        try {
-            WebElement dropdown = driver.findElement(AddPlayerLocator.select_country);
-            dropdown.click();
-            WebElement optionElement = dropdown.findElement(AddPlayerLocator.select_country_option);
-            optionElement.click();
-            logger.info("Selected dropdown option '{}' under '{}'", option, country);
-            Assert.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
-                    optionElement.isSelected());
-        }
-        catch (Exception e) {
-            logger.error("Error occurred while selecting dropdown option '{}' under '{}': {}", option, country, e.getMessage());
-            Assert.fail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
-        }
+        wVerification.assertTrue("Textbox is not found under the specified element: " + label, wAction.isElementDisplayed(textbox));
     }
 
     public void selectGender(String gender) {
         try {
             if (gender.equals("Male")) {
-                WebElement genderRadioButton = driver.findElement(AddPlayerLocator.lbl_male);
-                genderRadioButton.click();
-                logger.info("Clicked on custom element '{}'", gender);
+//                WebElement genderRadioButton = wAction.getElement(AddPlayerLocator.lbl_male);
+//                genderRadioButton.click();
+                wAction.click(AddPlayerLocator.lbl_male);
             } else {
-                WebElement genderRadioButton = driver.findElement(AddPlayerLocator.lbl_female);
-                genderRadioButton.click();
-                logger.info("Clicked on custom element '{}'", gender);
+//                WebElement genderRadioButton = wAction.getElement(AddPlayerLocator.lbl_female);
+//                genderRadioButton.click();
+                wAction.click(AddPlayerLocator.lbl_female);
             }
-        } catch(NoSuchElementException e) {
+        } catch(NoSuchElementException | IOException e) {
             logger.warn("Gender radio button not found.");
         }
     }
 
-    public void verifyElementText(String elementText, String expectedText){
+    public void verifyElementText(String elementText, String expectedText) throws IOException {
         try {
-            WebElement element = driver.findElement(AddPlayerLocator.alerttxt_id);
+            WebElement element = wAction.getElement(AddPlayerLocator.alerttxt_id);
             String actualText = element.getText();
             logger.info("Actual text for '{}': '{}'", elementText, actualText);
-            Assert.assertEquals(actualText, expectedText);
+            wVerification.assertEquals("'{}' is '{}'. Verification passed.",actualText, expectedText);
             logger.info("'{}' is '{}'. Verification passed.", elementText, expectedText);
         }
         catch(Exception e){
             logger.error("Error occurred while verifying text for element '{}': {}", elementText, e.getMessage());
-            Assert.assertEquals("Error occurred while verifying text for element '" + elementText + "'", expectedText, e.getMessage());
+            wAction.takeScreenshot();
+            wVerification.assertEquals("Error occurred while verifying text for element '" + elementText + "'", expectedText, e.getMessage());
         }
     }
 
     public void clickAddPlayerButton() {
         try {
-            WebElement buttonElement = driver.findElement(AddPlayerLocator.btn_addplayer);
-            Assert.assertTrue("Add player button is present", buttonElement.isDisplayed());
-            buttonElement.click();
+//            WebElement buttonElement = driver.findElement(AddPlayerLocator.btn_addplayer);
+//            Assert.assertTrue("Add player button is present", buttonElement.isDisplayed());
+            //            buttonElement.click();
+
+            wVerification.assertTrue("Add player button is present", wAction.isElementDisplayed(AddPlayerLocator.btn_addplayer));
+            wAction.click(AddPlayerLocator.btn_addplayer);
             logger.info("Clicked on the 'Add Player' button.");
         } catch(NoSuchElementException e) {
             logger.warn("Add Player Button not found on the page.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -231,10 +201,10 @@ public class AddNewPlayerModule {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.alertIsPresent());
-            Assert.assertTrue("Popup not available", true);
+            wVerification.assertTrue("Popup not available", true);
             logger.info("Popup verification successful: Popup is available");
         } catch(Exception e) {
-            Assert.assertFalse("Popup available - " + e.getMessage(), false);
+            wVerification.assertFail("Popup available - " + e.getMessage());
             logger.error("Popup verification failed: Popup available - {}", e.getMessage());
         }
     }
@@ -271,6 +241,21 @@ public class AddNewPlayerModule {
         }
     }
 
+    public void selectDropdownByCountry(String option, String country){
+        try {
+            WebElement dropdown = wAction.getElement(AddPlayerLocator.select_country);
+            dropdown.click();
+           /*WebElement element = wAction.getElement(AddPlayerLocator.select_country);
+            boolean flag = wAction.selectDropdown(element,option);*/
+            WebElement optionElement = dropdown.findElement(AddPlayerLocator.select_country_option);
+            optionElement.click();
+            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is selected",
+                    optionElement.isSelected());
+        }
+        catch (Exception e) {
+            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
+        }
+    }
 
     public void selectDropdownByPlayerName(String playeroption, String playername) throws InterruptedException {
         WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
@@ -279,8 +264,6 @@ public class AddNewPlayerModule {
             logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
             Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
         }
-
-
     }
 }
 

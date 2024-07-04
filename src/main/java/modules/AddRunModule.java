@@ -6,134 +6,122 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pagelocator.AddRunLocator;
+import utils.WebAction;
+import utils.WebVerification;
 
-
-
+import java.io.IOException;
 import java.util.List;
 
 public class AddRunModule {
     private static final Logger logger = LoggerFactory.getLogger(AddRunModule.class.getName());
 
-    WebDriver driver;
+    public WebDriver driver;
+    public WebAction wAction;
+    public WebVerification wVerification;
+
     public AddRunModule(WebDriver driver) {
         this.driver = driver;
+        wAction = new WebAction(this.driver);
+        wVerification = new WebVerification();
     }
 
     public void clickAddRunLink() {
         try {
-            WebElement linkElement = driver.findElement(AddRunLocator.link_addrun);
-            linkElement.click();
-            Assert.assertTrue("Successfully clicked on link", true);
-            logger.info("Add Run link clicked successfully.");
+//            WebElement linkElement = driver.findElement(AddRunLocator.link_addrun);
+//            linkElement.click();
+//            Assert.assertTrue("Successfully clicked on link", true);
+            boolean isClickHappen = wAction.click(AddRunLocator.link_addrun);
+            wVerification.assertTrue("Successfully clicked on Add Run Link", isClickHappen);
         } catch(Exception e) {
-            Assert.fail("Error occurred while clicking Add Player link: " + e.getMessage());
-            logger.warn("Error occurred while clicking Add Player link: " + e.getMessage());
+            wVerification.assertFail("Error occurred while clicking Add Run link: " + e.getMessage());
         }
     }
 
     public boolean verifyAddRunHeader() {
         try {
-            WebElement headerElement = driver.findElement(AddRunLocator.lbl_addrun);
-            Assert.assertTrue("Add Run header is present", headerElement.isDisplayed());
-            logger.info("Add Run header is found.");
+//            WebElement headerElement = driver.findElement(AddRunLocator.lbl_addrun);
+//            Assert.assertTrue("Add Run header is present", headerElement.isDisplayed());
+            wVerification.assertTrue("Add Run header is present", wAction.isElementDisplayed(AddRunLocator.lbl_addrun));
             return true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Add Player header is not present");
-            logger.warn("Add Player header is not found.");
+            wVerification.assertFail("Add Player header is not present");
             return false;
         }
     }
 
-
     public void verifyDropdownUnderPlayerName(String parentElement) {
         try {
-            WebElement parent = driver.findElement(AddRunLocator.dropdown_playername);
-            logger.info("Parent element found: " + parentElement);
+            WebElement parent = wAction.getElement(AddRunLocator.dropdown_playername);
 
             WebElement dropdown = new Select(parent).getFirstSelectedOption();
-            logger.info("Dropdown is displayed: " + dropdown.isDisplayed());
-            Assert.assertTrue("Dropdown is not found under the specified element: " + parentElement, dropdown.isDisplayed());
+            wVerification.assertTrue("Dropdown is not found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
         } catch (Exception e) {
-            logger.warn("Error occurred while verifying dropdown: " + e.getMessage());
             Assert.fail("Error occurred while verifying dropdown: " + e.getMessage());
         }
     }
 
-
-    public void verifyAddRunLabels() {
+    public boolean verifyAddRunLabels() {
+        boolean isBooleanPresent = false;
         try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_name);
-            Assert.assertTrue("Player Name label is present", elm.isDisplayed());
-            logger.info("Player Name label is present");
+//            WebElement elm = driver.findElement(AddRunLocator.lbl_name);
+//            Assert.assertTrue("Player Name label is present", elm.isDisplayed());
+            wVerification.assertTrue("Player Name label is present", wAction.isElementDisplayed(AddRunLocator.lbl_name));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Player Name label is not present");
-            logger.warn("Player Name label is not present");
+            wVerification.assertFail("Player Name label is not present");
+        }
+        try {
+            wVerification.assertTrue("Against Country label is present", wAction.isElementDisplayed(AddRunLocator.lbl_againstcountry));
+            isBooleanPresent = true;
+        } catch(NoSuchElementException e) {
+            wVerification.assertFail("Against Country label is not present");
         }
 
         try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_againstcountry);
-            Assert.assertTrue("Against Country label is present", elm.isDisplayed());
-            logger.info("Against Country label is present");
+            wVerification.assertTrue("Run label is present", wAction.isElementDisplayed(AddRunLocator.lbl_run));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Against Country label is not present");
-            logger.warn("Against Country label is not present");
+            wVerification.assertFail("Run label is not present");
         }
 
         try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_run);
-            Assert.assertTrue("Run label is present", elm.isDisplayed());
-            logger.info("Run label is present");
+            wVerification.assertTrue("Balls label is present", wAction.isElementDisplayed(AddRunLocator.lbl_balls));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Run label is not present");
-            logger.warn("Run label is not present");
+            wVerification.assertFail("Balls label is not present");
         }
 
         try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_balls);
-            Assert.assertTrue("Balls label is present", elm.isDisplayed());
-            logger.info("Balls label is present");
+            wVerification.assertTrue("Fours label is present", wAction.isElementDisplayed(AddRunLocator.lbl_fours));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Balls label is not present");
-            logger.warn("Balls label is not present");
+            wVerification.assertFail("Fours label is not present");
         }
 
         try {
-            WebElement elm =  driver.findElement(AddRunLocator.lbl_fours);
-            Assert.assertTrue("Fours label is present", elm.isDisplayed());
-            logger.info("Fours label is present");
+            wVerification.assertTrue("Sixes label is present", wAction.isElementDisplayed(AddRunLocator.lbl_sixes));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Fours label is not present");
-            logger.warn("Fours label is not present");
+            wVerification.assertFail("Sixes label is not present");
         }
 
         try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_sixes);
-            Assert.assertTrue("Sixes label is present", elm.isDisplayed());
-            logger.info("Sixes label is present");
+            wVerification.assertTrue("Inning Date label is present", wAction.isElementDisplayed(AddRunLocator.lbl_inning));
+            isBooleanPresent = true;
         } catch(NoSuchElementException e) {
-            Assert.fail("Sixes label is not present");
-            logger.warn("Sixes label is not present");
+            wVerification.assertFail("Inning Date label is not present");
         }
-
-        try {
-            WebElement elm = driver.findElement(AddRunLocator.lbl_inning);
-            Assert.assertTrue("Inning Date label is present", elm.isDisplayed());
-            logger.info("Inning Date label is present");
-        } catch(NoSuchElementException e) {
-            Assert.fail("Inning Date label is not present");
-            logger.warn("Inning Date label is not present");
-        }
+        return isBooleanPresent;
     }
 
     public boolean verifyAddRunButton() {
         try {
-            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
-            Assert.assertTrue("Add Run button is present", buttonElement.isDisplayed());
-            logger.info("Add Run button is present");
+//            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
+            wVerification.assertTrue("Add Run button is present", wAction.isElementDisplayed(AddRunLocator.btn_addrun));
             return true;
-        } catch(NoSuchElementException e) {
-            Assert.fail("Add Player button is not present");
-            logger.warn("Add Player button is not present");
+        }
+        catch(NoSuchElementException e) {
+            wVerification.assertFail("Add Player button is not present");
             return false;
         }
     }
@@ -141,17 +129,15 @@ public class AddRunModule {
 
     public void selectDropdownByCountry(String option, String country){
         try {
-            WebElement dropdown = driver.findElement(AddRunLocator.select_country);
+            WebElement dropdown = wAction.getElement(AddRunLocator.select_country);
             dropdown.click();
-            WebElement optionElement = dropdown.findElement(AddRunLocator.select_country_option);
+            WebElement optionElement = wAction.getElement(AddRunLocator.select_country_option);
             optionElement.click();
-            logger.info("Selected dropdown option '{}' under '{}'", option, country);
-            Assert.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
+            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
                     optionElement.isSelected());
         }
         catch (Exception e) {
-            logger.error("Error occurred while selecting dropdown option '{}' under '{}': {}", option, country, e.getMessage());
-            Assert.fail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
+            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
         }
     }
 
@@ -159,19 +145,19 @@ public class AddRunModule {
         WebElement inputField;
         switch(locator) {
             case "playerrun":
-                inputField = driver.findElement(AddRunLocator.txtbox_run_id);
+                inputField = wAction.getElement(AddRunLocator.txtbox_run_id);
                 break;
             case "playerballs":
-                inputField = driver.findElement(AddRunLocator.txtbox_ball_id);
+                inputField = wAction.getElement(AddRunLocator.txtbox_ball_id);
                 break;
             case "playerfours":
-                inputField = driver.findElement(AddRunLocator.txtbox_four_id);
+                inputField = wAction.getElement(AddRunLocator.txtbox_four_id);
                 break;
             case "playersixes":
-                inputField = driver.findElement(AddRunLocator.txtbox_six_id);
+                inputField = wAction.getElement(AddRunLocator.txtbox_six_id);
                 break;
             case "playerYear":
-                inputField = driver.findElement(AddRunLocator.txtbox_date);
+                inputField = wAction.getElement(AddRunLocator.txtbox_date);
                 break;
             default:
                 throw new IllegalArgumentException("Invalid locator: " + locator);
@@ -181,8 +167,9 @@ public class AddRunModule {
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("document.getElementById('playerYear').setAttribute('value','"+value+"');");
             }else {
-                inputField.click();
-                inputField.sendKeys(value);
+//                inputField.click();
+//                inputField.sendKeys(value);
+                wAction.enterData(inputField,value);
             }
             logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
         }
@@ -191,12 +178,13 @@ public class AddRunModule {
 
     public void clickAddRunButton(){
         try {
-            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
-            Assert.assertTrue("Add Run button is present", buttonElement.isDisplayed());
-            buttonElement.click();
-            logger.info("Clicked on the 'Add Run' button.");
+//            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
+            wVerification.assertTrue("Add Run button is present", wAction.isElementDisplayed(AddRunLocator.btn_addrun));
+            wAction.click(AddRunLocator.btn_addrun);
         } catch (NoSuchElementException e) {
             logger.warn("Add Run Button not found on the page.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -231,7 +219,7 @@ public class AddRunModule {
         } else {
             logger.warn("Text verification failed. Expected: " + run + ", Actual: " + actualText);
         }
-       Assert.assertEquals(run,actualText);
+       wVerification.assertEquals("'{}' is '{}'. Verification passed.",run,actualText);
     }
 }
 
