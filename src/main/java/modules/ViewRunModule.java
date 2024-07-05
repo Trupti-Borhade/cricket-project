@@ -72,7 +72,6 @@ public class ViewRunModule {
         WebElement element = section.findElement(ViewRunLocator.lbl_player);
         wVerification.assertTrue("Player name should be clickable after click", element.isEnabled());
         element.click();
-        logger.info("Clicked on '{}' under '{}'", sectionElement, webElement);
 
     }
 

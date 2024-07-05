@@ -208,7 +208,6 @@ public class AddRunModule {
         }
     }
 
-
     public void verifyExactRunText(String run) {
         WebElement element = driver.findElement(AddRunLocator.txt_run);
         logger.info("Expected text: " + run);

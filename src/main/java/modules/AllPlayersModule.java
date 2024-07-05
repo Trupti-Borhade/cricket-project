@@ -133,5 +133,4 @@ public class AllPlayersModule {
             logger.info("Element '{}' is not present under '{}'", elementText, headerText);
         }
     }
-
 }

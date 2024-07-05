@@ -55,14 +55,10 @@ public class HomePageModule {
 //            Assert.assertTrue("Successfully clicked on link", true);
             boolean isClickHappen = wAction.click(HomePageLocator.link_player);
             wVerification.assertTrue("Successfully clicked on Player Name Link", isClickHappen);
-            logger.info("Clicked on '{}' link successfully.", playername);
         }
         catch(Exception e){
             Assert.fail("Error occurred while clicking Player Name link: " + e.getMessage());
         }
-
-
     }
-
 }
 

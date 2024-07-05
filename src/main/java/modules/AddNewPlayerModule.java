@@ -161,10 +161,8 @@ public class AddNewPlayerModule {
             String actualText = element.getText();
             logger.info("Actual text for '{}': '{}'", elementText, actualText);
             wVerification.assertEquals("'{}' is '{}'. Verification passed.",actualText, expectedText);
-            logger.info("'{}' is '{}'. Verification passed.", elementText, expectedText);
         }
         catch(Exception e){
-            logger.error("Error occurred while verifying text for element '{}': {}", elementText, e.getMessage());
             wAction.takeScreenshot();
             wVerification.assertEquals("Error occurred while verifying text for element '" + elementText + "'", expectedText, e.getMessage());
         }
@@ -201,11 +199,10 @@ public class AddNewPlayerModule {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.alertIsPresent());
-            wVerification.assertTrue("Popup not available", true);
+            wVerification.assertTrue("Popup is available", true);
             logger.info("Popup verification successful: Popup is available");
         } catch(Exception e) {
-            wVerification.assertFail("Popup available - " + e.getMessage());
-            logger.error("Popup verification failed: Popup available - {}", e.getMessage());
+            wVerification.assertFail("Popup not available - " + e.getMessage());
         }
     }
 
@@ -215,7 +212,6 @@ public class AddNewPlayerModule {
             wait.until(ExpectedConditions.alertIsPresent());
             Alert alert = driver.switchTo().alert();
             String actualText = alert.getText();
-            logger.info("Popup text verification successful: Expected text - '{}', Actual text - '{}'", expectedText, actualText);
             assert actualText.equals(expectedText) : "Popup text verification failed. Expected: '" + expectedText + "' but was: '" + actualText + "'";
         } catch(Exception e) {
             logger.error("Popup text verification failed: {}", e.getMessage());
@@ -261,7 +257,6 @@ public class AddNewPlayerModule {
         WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
         if(dropdown.isDisplayed()){
             dropdown.click();
-            logger.info("Selected dropdown option '" + playeroption + "' for player '" + playername + "'");
             Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
         }
     }
