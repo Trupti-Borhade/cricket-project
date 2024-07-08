@@ -44,4 +44,6 @@ public class AddRunLocator {
     public static By txtbox_date = By.xpath("//input[@id='playerYear']");
 
     public  static By btn_addrun = By.xpath("//button[contains(text(),'Add Run')]");
+
+    public static By dropDown_Player = By.xpath("//*[@id='playername']");
 }

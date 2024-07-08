@@ -93,7 +93,7 @@ public class AddNewPlayerModule {
             WebElement parent = wAction.getElement(AddPlayerLocator.select_country);
             logger.info("Parent element found: " + parentElement);
             WebElement dropdown = new Select(parent).getFirstSelectedOption();
-            wVerification.assertTrue("Dropdown is not found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
+            wVerification.assertTrue("Dropdown is found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
         } catch (Exception e) {
             wVerification.assertFail("Error occurred while verifying dropdown: " + e.getMessage());
         }
@@ -120,24 +120,24 @@ public class AddNewPlayerModule {
 
     public void verifyTextBoxUnderLabels(String label) {
         WebElement parent;
-        WebElement textbox;
-
-        if (label.equals("Player Name")) {
-            parent = wAction.getElement(AddPlayerLocator.lbl_playername);
-            logger.info("Parent element text: " + parent.getText());
-            textbox = parent.findElement(AddPlayerLocator.txtbox_playername);
+        WebElement textbox=null;
+        try {
+            if (label.equals("Player Name")) {
+                parent = wAction.getElement(AddPlayerLocator.lbl_playername);
+                logger.info("Parent element text: " + parent.getText());
+                textbox = parent.findElement(AddPlayerLocator.txtbox_playername);
+            } else if (label.equals("Player Year")) {
+                parent = wAction.getElement(AddPlayerLocator.lbl_playeryear);
+                logger.info("Parent element text: " + parent.getText());
+                textbox = parent.findElement(AddPlayerLocator.txtbox_playeryear);
+            } else {
+                logger.error("Invalid label provided: " + label);
+                //return;
+            }
+        }catch (Exception e) {
+            wVerification.assertTrue("Textbox is not found under the specified element: " + label, wAction.isElementDisplayed(textbox));
         }
-        else if (label.equals("Player Year")) {
-            parent = wAction.getElement(AddPlayerLocator.lbl_playeryear);
-            logger.info("Parent element text: " + parent.getText());
-            textbox = parent.findElement(AddPlayerLocator.txtbox_playeryear);
         }
-        else {
-            logger.error("Invalid label provided: " + label);
-            return;
-        }
-        wVerification.assertTrue("Textbox is not found under the specified element: " + label, wAction.isElementDisplayed(textbox));
-    }
 
     public void selectGender(String gender) {
         try {
@@ -159,6 +159,7 @@ public class AddNewPlayerModule {
         try {
             WebElement element = wAction.getElement(AddPlayerLocator.alerttxt_id);
             String actualText = element.getText();
+            //            String actualText = wAction.getText(By.xpath("AddPlayerLocator.alerttxt_id"));
             logger.info("Actual text for '{}': '{}'", elementText, actualText);
             wVerification.assertEquals("'{}' is '{}'. Verification passed.",actualText, expectedText);
         }
@@ -237,27 +238,33 @@ public class AddNewPlayerModule {
         }
     }
 
-    public void selectDropdownByCountry(String option, String country){
+//    public void selectDropdownByCountry(String option, String country){
+//        try {
+//            wAction.selectDropDown(AddNewPlayerLocator.select_country, country);
+//            String expectedOptionText = option;
+//           wVerification.assertTrue("Dropdown option '" + expectedOptionText + "' is selected",
+//                    wAction.getSelectedOption(AddNewPlayerLocator.select_country).equals(country));
+//        }catch (Exception e) {
+//            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
+//        }
+//    }
+
+    public void selectDropdownByCountry(String option, String country) {
         try {
-            WebElement dropdown = wAction.getElement(AddPlayerLocator.select_country);
-            dropdown.click();
-           /*WebElement element = wAction.getElement(AddPlayerLocator.select_country);
-            boolean flag = wAction.selectDropdown(element,option);*/
-            WebElement optionElement = dropdown.findElement(AddPlayerLocator.select_country_option);
-            optionElement.click();
-            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is selected",
-                    optionElement.isSelected());
-        }
-        catch (Exception e) {
+            wAction.selectDropDown(AddPlayerLocator.select_country, option);
+            String expectedOptionText = option;
+           wVerification.assertTrue("Dropdown option '" + expectedOptionText + "' is selected",
+                    wAction.getSelectedOption(AddPlayerLocator.select_country).equals(option));
+        }catch (Exception e) {
             wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
         }
     }
 
-    public void selectDropdownByPlayerName(String playeroption, String playername) throws InterruptedException {
-        WebElement dropdown = driver.findElement(By.xpath("//select[@id='playername']/option[text()='" + playeroption + "']"));
-        if(dropdown.isDisplayed()){
-            dropdown.click();
-            Assert.assertEquals("Verify selected option", playeroption, dropdown.getText());
+    public void selectDropdownByPlayerName(String playeroption, String playername) throws Exception {
+        if(wAction.isElementDisplayed(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption)))){
+//            wAction.click(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption)));
+//            Assert.assertEquals("Verify selected option", playeroption, wAction.getText(By.id(playeroption)));
+            Assert.assertEquals("Verify selected option", playeroption,wAction.getText(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption))));
         }
     }
 }

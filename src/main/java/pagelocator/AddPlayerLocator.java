@@ -28,13 +28,17 @@ public class AddPlayerLocator {
 
     public static By select_country = By.xpath("//*[contains(text(),'Player Country')]/..//select");
 
-    public static By select_country_option = By.xpath("//option[text()='India']");
+//    public static By select_country_option = By.xpath("//option[text()='India']");
+
+    public static String select_country_option = "//option[text()='%s']";
 
     public static By lbl_male = By.xpath("//input[@value='Male']");
 
     public static By lbl_female = By.xpath("//input[@value='Female']");
 
     public static By alerttxt_id = By.xpath("//div[@id = 'errormsg']");
+
+    public static String dropDown_Player = "//select[@id='playername']/option[text()='%s']";
 
 }
 

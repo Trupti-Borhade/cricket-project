@@ -91,7 +91,7 @@ Feature: Verify cricket database framework
       And I verify Delete button under Actions
       Examples:
         |Player Name  | Player Country |Player Gender  | Player Year |
-        | Player4     | IND            |Male           | 1997        |
+        | Player1     | IND            |Male           | 1989        |
 
   @sanity @delete-viewallplayer
     Scenario Outline: Verify if "delete" button in View All Players is activate
@@ -105,5 +105,5 @@ Feature: Verify cricket database framework
       And I verify "<Player Name>" not present under "Player Name"
     Examples:
       |Player Name    |
-      | Player4       |
+      | Player1       |
 

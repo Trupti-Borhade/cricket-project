@@ -1,6 +1,7 @@
 package modules;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -53,7 +54,7 @@ public class HomePageModule {
 //            WebElement linkElement = driver.findElement(HomePageLocator.link_player);
 //            linkElement.click();
 //            Assert.assertTrue("Successfully clicked on link", true);
-            boolean isClickHappen = wAction.click(HomePageLocator.link_player);
+            boolean isClickHappen = wAction.click(By.xpath(String.format(HomePageLocator.link_player)));
             wVerification.assertTrue("Successfully clicked on Player Name Link", isClickHappen);
         }
         catch(Exception e){

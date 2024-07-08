@@ -1,6 +1,7 @@
 package modules;
 
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -115,9 +116,10 @@ public class AllPlayersModule {
     }
 
     public void clickDeletePlayerButton(String buttonName,String playerName) throws IOException {
-        WebElement Element = wAction.getElement(AllPlayersLocator.btn_clickdeleteplayer);
-        wAction.click(AllPlayersLocator.btn_clickdeleteplayer);
-//        Element.click();
+//        WebElement Element = wAction.getElement(By.xpath(String.format(AllPlayersLocator.btn_clickdeleteplayer)));
+        String btn_deleteplayer = String.format(AllPlayersLocator.btn_clickdeleteplayer.toString(),playerName);
+        wAction.click(By.xpath(btn_deleteplayer));
+        //        Element.click();
         logger.info("Clicked on '{}' button under '{}'", buttonName, playerName);
     }
 

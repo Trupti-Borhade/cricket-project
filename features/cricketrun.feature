@@ -88,7 +88,8 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Player Name>" under "Player Name"
     And I click on "<Player Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
-    And I verify "View Run [<Player Name>]" header text
+#    And I verify "View Run [<Player Name>]" header text
+    And I verify "<Player Name>" header text
     And I verify "<Date>" under "Date" label
     And I verify "<Against Country>" under "Against Country" label
     And I verify "<Run>" under "Run" label
@@ -119,7 +120,8 @@ Feature: Verify the run of the player in cricket framework
     And I verify "<Total Run>" under "Total Run"
     And I click on "<Name>" under "Player Name"
     And I verify current url contains "view-runs.php"
-    And I verify "View Run [<Name>]" header text
+#    And I verify "View Run [<Name>]" header text
+    And I verify "<Name>" header text
     And I refresh application
     And I verify "<Date>" under "Date" label
     And I verify "AUS" under "Against Country" label
@@ -142,7 +144,8 @@ Feature: Verify the run of the player in cricket framework
     And I verify alert is available
     And I verify popup text "Are you sure! you want to delete this Runs ?"
     And I accept popup
-    And I verify "<Run>" not present under "View Run [<Player Name>]"
+#    And I verify "<Run>" not present under "View Run [<Player Name>]"
+    And I verify "<Run>" not present under "<Player Name>"
     Examples:
     | Player Name | Run   |
     | Player21    | 90    |

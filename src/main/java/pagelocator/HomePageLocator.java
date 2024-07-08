@@ -21,6 +21,9 @@ public class HomePageLocator {
 
  public static By lbl_totalrun = By.xpath("//*[contains(text(),'Total Run')]");
 
- public static By link_player = By.xpath("//td[a[text()='Player21']]");
+// public static By link_player = By.xpath("//td[a[text()='Player21']]");
+
+ public static String link_player = "//td[a[text()='%S']]";
+
 
 }

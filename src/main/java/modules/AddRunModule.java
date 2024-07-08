@@ -52,7 +52,6 @@ public class AddRunModule {
     public void verifyDropdownUnderPlayerName(String parentElement) {
         try {
             WebElement parent = wAction.getElement(AddRunLocator.dropdown_playername);
-
             WebElement dropdown = new Select(parent).getFirstSelectedOption();
             wVerification.assertTrue("Dropdown is not found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
         } catch (Exception e) {
@@ -70,6 +69,7 @@ public class AddRunModule {
         } catch(NoSuchElementException e) {
             wVerification.assertFail("Player Name label is not present");
         }
+
         try {
             wVerification.assertTrue("Against Country label is present", wAction.isElementDisplayed(AddRunLocator.lbl_againstcountry));
             isBooleanPresent = true;
@@ -126,20 +126,28 @@ public class AddRunModule {
         }
     }
 
-
-    public void selectDropdownByCountry(String option, String country){
+    public void selectDropdownByCountry(String option, String country) {
         try {
-            WebElement dropdown = wAction.getElement(AddRunLocator.select_country);
-            dropdown.click();
-            WebElement optionElement = wAction.getElement(AddRunLocator.select_country_option);
-            optionElement.click();
-            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
-                    optionElement.isSelected());
-        }
-        catch (Exception e) {
+            wAction.selectDropDown(AddRunLocator.select_country, option);
+            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is selected",
+                    wAction.getSelectedOption(AddRunLocator.select_country).equals(option));
+        } catch (Exception e) {
             wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
         }
     }
+
+//        try {
+//            WebElement dropdown = wAction.getElement(AddRunLocator.select_country);
+//            dropdown.click();
+//            WebElement optionElement = wAction.getElement(AddRunLocator.select_country_option);
+//            optionElement.click();
+//            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
+//                    optionElement.isSelected());
+//        }
+//        catch (Exception e) {
+//            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
+//        }
+    //}
 
     public void addPlayerRunInfo(String value, String locator) {
         WebElement inputField;
@@ -191,7 +199,8 @@ public class AddRunModule {
 
     public void verifyDropdownOptionUnderPlayerName(String optionText, String dropdownIdentifier) {
         try {
-            WebElement dropdownElement = driver.findElement(By.xpath("//*[@id='playername']"));
+            WebElement dropdownElement = wAction.getElement(By.xpath(String.valueOf(AddRunLocator.dropDown_Player)));
+            //            WebElement dropdownElement = driver.findElement(By.xpath("//*[@id='playername']"));
             Select select = new Select(dropdownElement);
             List<WebElement> allOptions = select.getOptions();
 
@@ -208,10 +217,11 @@ public class AddRunModule {
         }
     }
 
-    public void verifyExactRunText(String run) {
-        WebElement element = driver.findElement(AddRunLocator.txt_run);
+    public void verifyExactRunText(String run) throws IOException {
+        WebElement element =wAction.getElement(AddRunLocator.txt_run);
         logger.info("Expected text: " + run);
         String actualText = element.getText();
+        //        String actualText = wAction.getText(By.xpath("AddRunLocator.txt_run"));
         logger.info("Actual text: " + actualText);
         if (actualText.equals(run)) {
             logger.info("Text verification passed.");

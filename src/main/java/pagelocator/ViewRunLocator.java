@@ -8,9 +8,11 @@ public class ViewRunLocator {
 
    public static By link_homepage=By.xpath("//a[text()='HomePage']");
 
-   public static By lbl_player = By.xpath("//td[a[text()='Player21']]");
+   public static String lbl_player = "//td[a[text()='%s']]";
 
-   public static By lbl_viewrun = By.xpath("//*[contains(text(),' View Run [Player21]')]");
+//   public static By lbl_viewrun = By.xpath("//*[contains(text(),' View Run [Player21]')]");
+
+   public static String lbl_viewrun = "//*[contains(text(),'View Run [%s]')]";
 
    public static By lbl_totalrun = By.xpath("//*[contains(text(),'Total Run')]");
 
@@ -30,6 +32,6 @@ public class ViewRunLocator {
 
    public static By btn_deleterun = By.xpath("//button[contains(text(), 'Delete')]");
 
-   public static By btn_deleteplayerrun = By.xpath("//td[text()='90']//following::button[contains(text(),'Delete')][1]");
+   public static String btn_deleteplayerrun = "//td[text()='%s']//following::button[contains(text(),'Delete')][1]";
 
 }

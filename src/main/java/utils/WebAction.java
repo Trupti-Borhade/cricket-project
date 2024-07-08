@@ -2,6 +2,7 @@ package utils;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -25,12 +26,20 @@ public class WebAction {
         elm.clear();
         elm.sendKeys(data);
     }
-
     public void enterData(WebElement element, CharSequence... data) {
         element.clear();
         element.sendKeys(data);
     }
 
+    public void selectDropDown(By elm , String value){
+        Select sel = new Select(getElement(elm));
+        sel.selectByVisibleText(value);
+    }
+
+    public String getSelectedOption(By elm){
+        Select sec = new Select(getElement(elm));
+        return sec.getFirstSelectedOption().getText();
+    }
 
     public boolean click(By by) throws IOException {
         try {
@@ -40,6 +49,17 @@ public class WebAction {
         } catch (Exception e) {
             takeScreenshot();
             return false;
+        }
+    }
+
+    public String getText(By by) throws IOException {
+        try {
+            WebElement elm = getElement(by);
+            elm.click();
+           return elm.getText();
+        } catch (Exception e) {
+            takeScreenshot();
+            return null;
         }
     }
 
