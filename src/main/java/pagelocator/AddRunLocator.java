@@ -21,10 +21,6 @@ public class AddRunLocator {
 
     public static By lbl_inning = By.xpath("//td[contains(text(),'Inning Date')]");
 
-    public static By select_playername = By.xpath("//*[contains(text(),'Player Name')]/..//select");
-
-    public static By select_playername_option = By.xpath("//option[text()='Player21 - IND']");
-
     public static By dropdown_playername = By.xpath("//select[@id='playername']");
 
     public static By select_country = By.xpath("//*[contains(text(),'Against Country')]/..//select");

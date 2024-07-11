@@ -27,8 +27,6 @@ public class HomePageModule {
 
     public void clickHomePageLink() {
         try{
-//            WebElement linkElement = driver.findElement(HomePageLocator.link_homepage);
-//            linkElement.click();
             boolean isClickHappen = wAction.click(HomePageLocator.link_homepage);
             wVerification.assertTrue("Successfully clicked on link", isClickHappen);
         }
@@ -40,7 +38,6 @@ public class HomePageModule {
 
     public boolean verifyAllPlayerRunHeader(){
         try {
-//            WebElement headerElement = driver.findElement(HomePageLocator.lbl_allplayerrun);
             wVerification.assertTrue("All Players Runs header is present", wAction.isElementDisplayed(HomePageLocator.lbl_allplayerrun));
             return true;
         } catch(NoSuchElementException e) {
@@ -51,10 +48,7 @@ public class HomePageModule {
 
     public void clickPlayerNameLink(String playername){
         try {
-//            WebElement linkElement = driver.findElement(HomePageLocator.link_player);
-//            linkElement.click();
-//            Assert.assertTrue("Successfully clicked on link", true);
-            boolean isClickHappen = wAction.click(By.xpath(String.format(HomePageLocator.link_player)));
+            boolean isClickHappen = wAction.click(By.xpath(String.format(HomePageLocator.link_player,playername)));
             wVerification.assertTrue("Successfully clicked on Player Name Link", isClickHappen);
         }
         catch(Exception e){

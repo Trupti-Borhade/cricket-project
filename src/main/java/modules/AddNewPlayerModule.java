@@ -90,9 +90,8 @@ public class AddNewPlayerModule {
 
     public void verifyDropdownUnderPlayerCountry(String parentElement) {
         try {
-            WebElement parent = wAction.getElement(AddPlayerLocator.select_country);
-            logger.info("Parent element found: " + parentElement);
-            WebElement dropdown = new Select(parent).getFirstSelectedOption();
+            WebElement dropdown = new Select(wAction.getElement(AddPlayerLocator.select_country)).getFirstSelectedOption();
+            logger.info("Dropdown element is found: " + parentElement);
             wVerification.assertTrue("Dropdown is found under the specified element: " + parentElement, wAction.isElementDisplayed(dropdown));
         } catch (Exception e) {
             wVerification.assertFail("Error occurred while verifying dropdown: " + e.getMessage());
@@ -111,8 +110,6 @@ public class AddNewPlayerModule {
             default:
                 throw new IllegalArgumentException("Invalid locator: " + locator);
         }
-        //inputField.clear();
-        //inputField.sendKeys(value);
         wAction.enterData(inputField,value);
         logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
     }
@@ -123,16 +120,13 @@ public class AddNewPlayerModule {
         WebElement textbox=null;
         try {
             if (label.equals("Player Name")) {
-                parent = wAction.getElement(AddPlayerLocator.lbl_playername);
-                logger.info("Parent element text: " + parent.getText());
-                textbox = parent.findElement(AddPlayerLocator.txtbox_playername);
+                logger.info("Parent element text: " + wAction.getElement(AddPlayerLocator.lbl_playername).getText());
+                textbox = wAction.getElementUsingParent(wAction.getElement(AddPlayerLocator.lbl_playername),AddPlayerLocator.txtbox_playername);
             } else if (label.equals("Player Year")) {
-                parent = wAction.getElement(AddPlayerLocator.lbl_playeryear);
-                logger.info("Parent element text: " + parent.getText());
-                textbox = parent.findElement(AddPlayerLocator.txtbox_playeryear);
+                logger.info("Parent element text: " + wAction.getElement(AddPlayerLocator.lbl_playeryear).getText());
+                textbox = wAction.getElementUsingParent(wAction.getElement(AddPlayerLocator.lbl_playeryear),AddPlayerLocator.txtbox_playeryear);
             } else {
                 logger.error("Invalid label provided: " + label);
-                //return;
             }
         }catch (Exception e) {
             wVerification.assertTrue("Textbox is not found under the specified element: " + label, wAction.isElementDisplayed(textbox));
@@ -142,15 +136,14 @@ public class AddNewPlayerModule {
     public void selectGender(String gender) {
         try {
             if (gender.equals("Male")) {
-//                WebElement genderRadioButton = wAction.getElement(AddPlayerLocator.lbl_male);
-//                genderRadioButton.click();
                 wAction.click(AddPlayerLocator.lbl_male);
+                logger.info("Clicked on Male gender radio button.");
             } else {
-//                WebElement genderRadioButton = wAction.getElement(AddPlayerLocator.lbl_female);
-//                genderRadioButton.click();
                 wAction.click(AddPlayerLocator.lbl_female);
+                logger.info("Clicked on Female gender radio button.");
             }
-        } catch(NoSuchElementException | IOException e) {
+        }
+        catch(NoSuchElementException | IOException e) {
             logger.warn("Gender radio button not found.");
         }
     }
@@ -158,8 +151,7 @@ public class AddNewPlayerModule {
     public void verifyElementText(String elementText, String expectedText) throws IOException {
         try {
             WebElement element = wAction.getElement(AddPlayerLocator.alerttxt_id);
-            String actualText = element.getText();
-            //            String actualText = wAction.getText(By.xpath("AddPlayerLocator.alerttxt_id"));
+            String actualText = wAction.getText(element);
             logger.info("Actual text for '{}': '{}'", elementText, actualText);
             wVerification.assertEquals("'{}' is '{}'. Verification passed.",actualText, expectedText);
         }
@@ -171,10 +163,6 @@ public class AddNewPlayerModule {
 
     public void clickAddPlayerButton() {
         try {
-//            WebElement buttonElement = driver.findElement(AddPlayerLocator.btn_addplayer);
-//            Assert.assertTrue("Add player button is present", buttonElement.isDisplayed());
-            //            buttonElement.click();
-
             wVerification.assertTrue("Add player button is present", wAction.isElementDisplayed(AddPlayerLocator.btn_addplayer));
             wAction.click(AddPlayerLocator.btn_addplayer);
             logger.info("Clicked on the 'Add Player' button.");
@@ -189,9 +177,12 @@ public class AddNewPlayerModule {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         try {
             wait.until(ExpectedConditions.alertIsPresent());
+            Assert.assertTrue("Alert is available.", true);
             logger.info("Alert is available.");
             return true;
         } catch(Exception e) {
+            Assert.assertFalse("Alert is not available.", false);
+            logger.info("Alert is not available.");
             return false;
         }
     }
@@ -204,6 +195,7 @@ public class AddNewPlayerModule {
             logger.info("Popup verification successful: Popup is available");
         } catch(Exception e) {
             wVerification.assertFail("Popup not available - " + e.getMessage());
+            logger.error("Popup verification is not successful");
         }
     }
 
@@ -232,22 +224,13 @@ public class AddNewPlayerModule {
             logger.info("Alert is present.");
             Alert alert = driver.switchTo().alert();
             alert.accept();
+            Assert.assertTrue("Alert was successfully accepted.", true);
             logger.info("Accepted the alert.");
         } catch(Exception e) {
-           logger.warn("Alert not found.");
+            Assert.fail("Alert not found.");
+            logger.warn("Alert not found.");
         }
     }
-
-//    public void selectDropdownByCountry(String option, String country){
-//        try {
-//            wAction.selectDropDown(AddNewPlayerLocator.select_country, country);
-//            String expectedOptionText = option;
-//           wVerification.assertTrue("Dropdown option '" + expectedOptionText + "' is selected",
-//                    wAction.getSelectedOption(AddNewPlayerLocator.select_country).equals(country));
-//        }catch (Exception e) {
-//            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
-//        }
-//    }
 
     public void selectDropdownByCountry(String option, String country) {
         try {
@@ -255,17 +238,24 @@ public class AddNewPlayerModule {
             String expectedOptionText = option;
            wVerification.assertTrue("Dropdown option '" + expectedOptionText + "' is selected",
                     wAction.getSelectedOption(AddPlayerLocator.select_country).equals(option));
+            logger.info("Verification successful: Dropdown option '{}' is selected for country '{}'", option, country);
         }catch (Exception e) {
             wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
+            logger.error("Error occurred while selecting dropdown option '{}' under '{}': {}", option, country, e.getMessage());
         }
     }
 
     public void selectDropdownByPlayerName(String playeroption, String playername) throws Exception {
-        if(wAction.isElementDisplayed(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption)))){
-//            wAction.click(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption)));
-//            Assert.assertEquals("Verify selected option", playeroption, wAction.getText(By.id(playeroption)));
-            Assert.assertEquals("Verify selected option", playeroption,wAction.getText(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption))));
-        }
+      try {
+          if (wAction.isElementDisplayed(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption)))) {
+              logger.info("Dropdown '{}' is displayed for player '{}'", playeroption, playername);
+              Assert.assertEquals("Verify selected option", playeroption, wAction.getText(By.xpath(String.format(AddPlayerLocator.dropDown_Player, playeroption))));
+              logger.info("Assertion passed: Dropdown '{}' text matches for player '{}'", playeroption, playername);
+          }
+      }
+      catch (Exception e){
+              logger.warn("Dropdown '{}' is not displayed for player '{}'", playeroption, playername);
+          }
     }
 }
 

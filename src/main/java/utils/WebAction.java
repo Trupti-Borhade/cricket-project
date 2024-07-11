@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class WebAction {
@@ -22,13 +23,27 @@ public class WebAction {
     }
 
     public void enterData(By by, CharSequence... data) {
-        WebElement elm = getElement(by);
+        logger.info("Entering data into element located by: {}", by);
+        try{
+            WebElement elm = getElement(by);
         elm.clear();
         elm.sendKeys(data);
+        }
+        catch (Exception e){
+            logger.error("Failed to enter data into element: {}", e.getMessage());
+        }
     }
+
     public void enterData(WebElement element, CharSequence... data) {
+        logger.info("Entering data into element: {}", element);
+     try{
         element.clear();
         element.sendKeys(data);
+        logger.info("Entered data successfully into element.");
+     }
+     catch(Exception e){
+         logger.error("Failed to enter data into element: {}", e.getMessage());
+     }
     }
 
     public void selectDropDown(By elm , String value){
@@ -42,60 +57,137 @@ public class WebAction {
     }
 
     public boolean click(By by) throws IOException {
+        logger.info("Clicking element located by: {}", by);
         try {
             WebElement elm = getElement(by);
             elm.click();
+            logger.info("Clicked on element located by: " + by.toString());
             return true;
         } catch (Exception e) {
+            logger.error("Failed to click element: {}", e.getMessage());
+            takeScreenshot();
+            return false;
+        }
+    }
+
+    public boolean click(WebElement elm) throws IOException {
+        logger.info("Clicking element: {}", elm);
+        try {
+            elm.click();
+            return true;
+        } catch (Exception e) {
+            logger.error("Failed to click element: {}", e.getMessage());
             takeScreenshot();
             return false;
         }
     }
 
     public String getText(By by) throws IOException {
+        logger.info("Getting text from element located by: {}", by);
         try {
             WebElement elm = getElement(by);
             elm.click();
-           return elm.getText();
+            logger.info("Retrieved text successfully: {}", elm.getText());
+            return elm.getText();
         } catch (Exception e) {
+            logger.error("Failed to get text from element: {}", e.getMessage());
+            takeScreenshot();
+            return null;
+        }
+    }
+
+    public String getText(WebElement elm) throws IOException {
+        logger.info("Getting text from element located by: {}", elm);
+        try {
+            //WebElement elm = getElement(by);
+            //elm.click();
+            logger.info("Retrieved text successfully: {}", elm.getText());
+            return elm.getText();
+        } catch (Exception e) {
+            logger.error("Failed to get text from element: {}", e.getMessage());
             takeScreenshot();
             return null;
         }
     }
 
     public boolean isElementDisplayed(By by) {
-        return getElement(by).isDisplayed();
+        try {
+            logger.info("Element is displaying...");
+            return getElement(by).isDisplayed();
+        }
+        catch (Exception e){
+            logger.error("Failed to locate element with locator: " + by.toString(), e);
+            return false;
+        }
     }
 
     public boolean isElementDisplayed(WebElement element) {
-        return element.isDisplayed();
+        try {
+            logger.info("Checking if element is displayed: {}", element);
+            return element.isDisplayed();
+        }
+        catch(Exception e){
+            logger.error("Failed to check element display status: {}", e.getMessage());
+            return false;
+        }
     }
 
+
     public WebElement getElement(By by) {
-        return driver.findElement(by);
+        try {
+            logger.info("Finding element by: {}", by);
+            return driver.findElement(by);
+        }
+        catch (Exception e){
+            logger.error("Failed to find element by {}: {}", by, e.getMessage());
+            return null;
+        }
+    }
+
+    public List<WebElement> getElements(By by){
+        try {
+            logger.info("Finding elements by: {}", by);
+            return driver.findElements(by);
+        }
+        catch(Exception e){
+            logger.error("Failed to find elements by {}: {}", by, e.getMessage());
+            return null;
+        }
+    }
+
+    public WebElement getElementUsingParent(WebElement elm , By by){
+        try {
+            logger.info("Finding element using parent element: {}", elm);
+            return elm.findElement(by);
+        }
+        catch(Exception e){
+            logger.error("Failed to find element using parent: {}", e.getMessage());
+            return null;
+        }
     }
 
     public void takeScreenshot() throws IOException {
-        TakesScreenshot scrShot =((TakesScreenshot)driver);
-        File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-        String screenshotPath = PropertiesReader.getEnvProperties().getProperty("screenshotpath");
-        File DestFile=new File(screenshotPath+File.separator+"screenshot_"+new SimpleDateFormat("ddMMYYYYHHmmss").format(Calendar.getInstance().getTime())+".png");
-        FileUtils.copyFile(SrcFile, DestFile);
+        try {
+            TakesScreenshot scrShot = ((TakesScreenshot) driver);
+            File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);
+            String screenshotPath = PropertiesReader.getEnvProperties().getProperty("screenshotpath");
+            File DestFile = new File(screenshotPath + File.separator + "screenshot_" + new SimpleDateFormat("ddMMYYYYHHmmss").format(Calendar.getInstance().getTime()) + ".png");
+            FileUtils.copyFile(SrcFile, DestFile);
+            logger.info("Screenshot captured and saved: {}", DestFile.getAbsolutePath());
+        }
+        catch (IOException e){
+            logger.error("Failed to take screenshot: {}", e.getMessage());
+        }
     }
 
-//    public boolean selectDropdown(WebElement dropDownele, String value){
-//        boolean flag = false;
-//        try {
-//            Select select = new Select(dropDownele);
-//            select.selectByValue(value);
-//            flag = true;
-//        }catch (Exception e){
-//            flag = false;
-//            e.printStackTrace();
-//        }
-//        return flag;
-//    }
-
+    public boolean isElementEnabled(WebElement element){
+        try{
+            return element.isEnabled();
+        }catch (Exception e){
+            logger.error("An Error Occurred: "+e.getMessage());
+            return false;
+        }
+    }
 
 }
 

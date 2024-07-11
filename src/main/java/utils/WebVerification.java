@@ -28,7 +28,5 @@ public class WebVerification {
           }else{
               logger.error(msg + "not equal");
           }
-
-
     }
 }

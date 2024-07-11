@@ -18,7 +18,6 @@ import utils.PropertiesReader;
 
 import java.io.IOException;
 
-
 public class StepDef {
     private static final Logger logger = LoggerFactory.getLogger(StepDef.class.getName());
 
@@ -106,6 +105,7 @@ public class StepDef {
     public void iVerifyTextboxUnderLabels(String label) {
         logger.info("Verifying textbox under label: " + label);
         addNewPlayerModule.verifyTextBoxUnderLabels(label);
+        logger.info("Textbox is verified");
     }
 
     @And("I verify Player Country text")
@@ -262,7 +262,7 @@ public class StepDef {
     }
 
     @And("I verify exact {string} text")
-    public void iVerifyExactText(String run) {
+    public void iVerifyExactText(String run) throws IOException {
         addRunModule.verifyExactRunText(run);
     }
 
@@ -332,7 +332,7 @@ public class StepDef {
     }
 
     @And("I select dropdown option {string} under {string} label")
-    public void iSelectDropdownOptionUnderLabel(String playeroption, String playername) throws InterruptedException {
+    public void iSelectDropdownOptionUnderLabel(String playeroption, String playername) throws Exception {
         logger.info("Selecting dropdown option '{}' under label '{}'", playeroption, playername);
         addNewPlayerModule.selectDropdownByPlayerName(playeroption, playername);
     }
@@ -355,7 +355,7 @@ public class StepDef {
     @And("I verify {string} header text")
     public void iVerifyViewRunHeaderText(String viewrun) {
         logger.info("Verifying {} header text...", viewrun);
-        viewRunModule.verifyViewRunHeader();
+        viewRunModule.verifyViewRunHeader(viewrun);
         logger.info("{} header text verified.", viewrun);
     }
 
@@ -385,16 +385,14 @@ public class StepDef {
     }
 
     @And("I click on {string} under {string}")
-    public void iClickOnUnder(String sectionElement, String webElement) {
+    public void iClickOnUnder(String sectionElement, String webElement) throws IOException {
         viewRunModule.clickPlayerName(sectionElement, webElement);
-
     }
 
     @And("I verify {string} under {string} label")
     public void iVerifyUnderLabel(String string, String string2) {
         WebElement section = driver.findElement(By.xpath("//*[contains(text(),'" + string2 + "')]"));
         WebElement element = section.findElement(By.xpath("//*[text()='" + string + "']"));
-
         if (element.isDisplayed()) {
             logger.info("'{}' under '{}' is present.", string, string2);
         } else {

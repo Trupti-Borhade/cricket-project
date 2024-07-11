@@ -12,6 +12,7 @@ import utils.WebAction;
 import utils.WebVerification;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class AllPlayersModule {
@@ -29,8 +30,6 @@ public class AllPlayersModule {
 
     public void clickAllPlayersLink() {
         try {
-//            WebElement linkElement = driver.findElement(AllPlayersLocator.link_allplayer);
-//            linkElement.click();
             boolean isClickHappen = wAction.click(AllPlayersLocator.link_allplayer);
             wVerification.assertTrue("Successfully clicked on Add Run Link", isClickHappen);
         }
@@ -41,7 +40,6 @@ public class AllPlayersModule {
 
     public boolean verifyViewAllPlayersHeader() {
         try {
-//            WebElement headerElement = wAction.getElement(AllPlayersLocator.lbl_viewallplayers);
             wVerification.assertTrue("View All Players header is present",wAction.isElementDisplayed(AllPlayersLocator.lbl_viewallplayers));
             return true;
         } catch(NoSuchElementException e) {
@@ -53,7 +51,6 @@ public class AllPlayersModule {
     public boolean verifyAllPlayersLabels(){
         boolean isBooleanPresent = false;
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_playerid);
             wVerification.assertTrue("Player ID label is present", wAction.isElementDisplayed(AllPlayersLocator.lbl_playerid));
             isBooleanPresent = true;
         }
@@ -62,7 +59,6 @@ public class AllPlayersModule {
         }
 
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_playername);
             wVerification.assertTrue("Player Name label is present", wAction.isElementDisplayed(AllPlayersLocator.lbl_playername));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -70,7 +66,6 @@ public class AllPlayersModule {
         }
 
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_playercountry);
             wVerification.assertTrue("Player Country label is present", wAction.isElementDisplayed(AllPlayersLocator.lbl_playercountry));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -78,7 +73,6 @@ public class AllPlayersModule {
         }
 
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_playergender);
             wVerification.assertTrue("Player Gender label is present",  wAction.isElementDisplayed(AllPlayersLocator.lbl_playergender));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -86,7 +80,6 @@ public class AllPlayersModule {
         }
 
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_playeryear);
             wVerification.assertTrue("Player Year label is present", wAction.isElementDisplayed(AllPlayersLocator.lbl_playeryear));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -94,7 +87,6 @@ public class AllPlayersModule {
         }
 
         try {
-//            WebElement elm = driver.findElement(AllPlayersLocator.lbl_action);
             wVerification.assertTrue("Action label is present", wAction.isElementDisplayed(AllPlayersLocator.lbl_action));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -103,10 +95,8 @@ public class AllPlayersModule {
         return isBooleanPresent;
     }
 
-
     public boolean verifyAllPlayerDeleteButton() {
         try {
-//            WebElement buttonElement = driver.findElement(AllPlayersLocator.btn_deleteplayer);
             wVerification.assertTrue("Delete button is present", wAction.isElementDisplayed(AllPlayersLocator.btn_deleteplayer));
             return true;
         } catch(NoSuchElementException e) {
@@ -116,22 +106,18 @@ public class AllPlayersModule {
     }
 
     public void clickDeletePlayerButton(String buttonName,String playerName) throws IOException {
-//        WebElement Element = wAction.getElement(By.xpath(String.format(AllPlayersLocator.btn_clickdeleteplayer)));
-        String btn_deleteplayer = String.format(AllPlayersLocator.btn_clickdeleteplayer.toString(),playerName);
+        String btn_deleteplayer = String.format(AllPlayersLocator.btn_clickdeleteplayer,playerName);
         wAction.click(By.xpath(btn_deleteplayer));
-        //        Element.click();
         logger.info("Clicked on '{}' button under '{}'", buttonName, playerName);
     }
 
-    public void verifyElementNotPresentUnderAllPlayer(String elementText, String headerText){
+   public void verifyElementNotPresentUnderAllPlayer(String elementText, String headerText){
         try {
-            wAction.getElement(AllPlayersLocator.lbl_playergender);
-
-           wAction.getElement(AllPlayersLocator.txt_femalegender);
-
+            String player_Name = String.format(AllPlayersLocator.txt_playername,elementText);
+            List<WebElement> list = wAction.getElements(By.xpath(player_Name));
+            wVerification.assertTrue("Element '{}' is present under '{}'", wAction.getElements(By.xpath(player_Name)).size() == 0);
             logger.warn("Element '{}' is present under '{}'", elementText, headerText);
-        }
-        catch (NoSuchElementException e) {
+        }catch (NoSuchElementException e) {
             logger.info("Element '{}' is not present under '{}'", elementText, headerText);
         }
     }

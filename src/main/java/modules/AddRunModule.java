@@ -27,9 +27,6 @@ public class AddRunModule {
 
     public void clickAddRunLink() {
         try {
-//            WebElement linkElement = driver.findElement(AddRunLocator.link_addrun);
-//            linkElement.click();
-//            Assert.assertTrue("Successfully clicked on link", true);
             boolean isClickHappen = wAction.click(AddRunLocator.link_addrun);
             wVerification.assertTrue("Successfully clicked on Add Run Link", isClickHappen);
         } catch(Exception e) {
@@ -39,8 +36,6 @@ public class AddRunModule {
 
     public boolean verifyAddRunHeader() {
         try {
-//            WebElement headerElement = driver.findElement(AddRunLocator.lbl_addrun);
-//            Assert.assertTrue("Add Run header is present", headerElement.isDisplayed());
             wVerification.assertTrue("Add Run header is present", wAction.isElementDisplayed(AddRunLocator.lbl_addrun));
             return true;
         } catch(NoSuchElementException e) {
@@ -62,8 +57,6 @@ public class AddRunModule {
     public boolean verifyAddRunLabels() {
         boolean isBooleanPresent = false;
         try {
-//            WebElement elm = driver.findElement(AddRunLocator.lbl_name);
-//            Assert.assertTrue("Player Name label is present", elm.isDisplayed());
             wVerification.assertTrue("Player Name label is present", wAction.isElementDisplayed(AddRunLocator.lbl_name));
             isBooleanPresent = true;
         } catch(NoSuchElementException e) {
@@ -116,7 +109,6 @@ public class AddRunModule {
 
     public boolean verifyAddRunButton() {
         try {
-//            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
             wVerification.assertTrue("Add Run button is present", wAction.isElementDisplayed(AddRunLocator.btn_addrun));
             return true;
         }
@@ -135,19 +127,6 @@ public class AddRunModule {
             wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
         }
     }
-
-//        try {
-//            WebElement dropdown = wAction.getElement(AddRunLocator.select_country);
-//            dropdown.click();
-//            WebElement optionElement = wAction.getElement(AddRunLocator.select_country_option);
-//            optionElement.click();
-//            wVerification.assertTrue("Dropdown option '" + option + "' under '" + country + "' is not selected",
-//                    optionElement.isSelected());
-//        }
-//        catch (Exception e) {
-//            wVerification.assertFail("Error occurred while selecting dropdown option '" + option + "' under '" + country + "': " + e.getMessage());
-//        }
-    //}
 
     public void addPlayerRunInfo(String value, String locator) {
         WebElement inputField;
@@ -170,13 +149,12 @@ public class AddRunModule {
             default:
                 throw new IllegalArgumentException("Invalid locator: " + locator);
         }
-        if(inputField.isEnabled() || inputField.isDisplayed()){
+
+        if(wAction.isElementEnabled(inputField) || wAction.isElementDisplayed(inputField)){
             if(locator.equalsIgnoreCase("playerYear")) {
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("document.getElementById('playerYear').setAttribute('value','"+value+"');");
             }else {
-//                inputField.click();
-//                inputField.sendKeys(value);
                 wAction.enterData(inputField,value);
             }
             logger.info("Entered text '{}' into input field with locator '{}'", value, locator);
@@ -186,7 +164,6 @@ public class AddRunModule {
 
     public void clickAddRunButton(){
         try {
-//            WebElement buttonElement = driver.findElement(AddRunLocator.btn_addrun);
             wVerification.assertTrue("Add Run button is present", wAction.isElementDisplayed(AddRunLocator.btn_addrun));
             wAction.click(AddRunLocator.btn_addrun);
         } catch (NoSuchElementException e) {
@@ -196,16 +173,14 @@ public class AddRunModule {
         }
     }
 
-
     public void verifyDropdownOptionUnderPlayerName(String optionText, String dropdownIdentifier) {
         try {
             WebElement dropdownElement = wAction.getElement(By.xpath(String.valueOf(AddRunLocator.dropDown_Player)));
-            //            WebElement dropdownElement = driver.findElement(By.xpath("//*[@id='playername']"));
             Select select = new Select(dropdownElement);
             List<WebElement> allOptions = select.getOptions();
 
             for (WebElement element : allOptions) {
-                if (element.getText().equalsIgnoreCase(optionText)) {
+                if (wAction.getText(element).equalsIgnoreCase(optionText)) {
                     System.out.println("verified text " + optionText);
                     logger.info("Dropdown option '{}' under '{}' is available", optionText, dropdownIdentifier);
                     break;
@@ -220,8 +195,7 @@ public class AddRunModule {
     public void verifyExactRunText(String run) throws IOException {
         WebElement element =wAction.getElement(AddRunLocator.txt_run);
         logger.info("Expected text: " + run);
-        String actualText = element.getText();
-        //        String actualText = wAction.getText(By.xpath("AddRunLocator.txt_run"));
+        String actualText = wAction.getText(element);
         logger.info("Actual text: " + actualText);
         if (actualText.equals(run)) {
             logger.info("Text verification passed.");

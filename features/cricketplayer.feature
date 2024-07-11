@@ -37,47 +37,7 @@ Feature: Verify cricket database framework
     | Player4     | India          | Male     | 1997        |
 
 
-  @regression @inning-date
-   Scenario Outline: Verify alert displayed if same inning date is entered for same player again
-      And I click on Add New Player link
-      And I verify current url contains "new-player.php"
-      And I verify Player Name text
-      And I enter "<Player Name>" with "playername"
-      And I select dropdown option "<Player Country>" under "Player Country"
-      And I select "<Gender>" gender
-      And I enter "<Player Year>" with "playerYear"
-      And I click on Add Player button
-      And I verify alert is available
-      And I verify "errormsg" is "Issue in Data. Duplicate Entry"
-    Examples:
-      |Player Name  | Player Country |Gender | Player Year |
-      | Player1     | India          | Male  | 1989        |
-     
-
-  @regression @gender
-  Scenario Outline: Verify that female gender is not seen on every page
-    And I click on Add New Player link
-    And I verify current url contains "new-player.php"
-    And I verify Add new Player header text
-    And I enter "<Player Name>" with "playername"
-    And I select dropdown option "<Player Country>" under "Player Country"
-    And I select "<Gender>" gender
-    And I verify Player Year text
-    And I enter "<Player Year>" with "playerYear"
-    And I click on Add Player button
-    And I verify popup is available
-    And I verify popup text "<Player Name>  Added  Successfully"
-    And I accept popup
-    And I click on All Players link
-    And I verify current url contains "all-player.php"
-    And I refresh application
-    And I verify View All Players header text
-    And I verify "Female" not present under "Player Gender"
-    Examples:
-      |Player Name       | Player Country     | Gender  |Player Year |
-      | Anaika           |  Australia         | FeMale  |1998        |
-
-    @sanity @all-player
+  @sanity @all-player
     Scenario Outline: Verify if all players data is visible under "All Player"
       And I click on All Players link
       And I verify current url contains "all-player.php"

@@ -22,13 +22,8 @@ public class AddPlayerLocator {
 
     public static By txtbox_playeryear = By.xpath("//input[@id='playerYear']");
 
-    public static By select_playername = By.xpath("//*[contains(text(),'Player Name')]/..//select");
-
-    public static By select_playername_option = By.xpath("//option[text()='Player21 - IND']");
 
     public static By select_country = By.xpath("//*[contains(text(),'Player Country')]/..//select");
-
-//    public static By select_country_option = By.xpath("//option[text()='India']");
 
     public static String select_country_option = "//option[text()='%s']";
 
